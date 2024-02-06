@@ -10,4 +10,11 @@
   <properties>
     <java.version>1.8</java.version>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-commons</artifactId>
+      <version>3.2.2</version>
+    </dependency>
+  </dependencies>
 </project>
