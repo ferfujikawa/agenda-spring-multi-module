@@ -69,20 +69,5 @@ public class Tarefa {
 
     public PrazoTarefa getPrazo() {
         return prazo;
-    }
-
-    public Boolean podeAlterarPrazo() {
-        // TODO Implementar regra de negócio deste método
-        return true;
-    }
-
-    public Boolean podeCancelar() {
-        // TODO Implementar regra de negócio deste método
-        return true;
-    }
-
-    public Boolean podeConcluir() {
-        // TODO Implementar regra de negócio deste método
-        return true;
-    }    
+        }    
 }

@@ -12,6 +12,8 @@ public class PrazoTarefa {
     @Column(name = "prazo")
     private LocalDateTime valor;
 
+    protected PrazoTarefa() {}
+
     public PrazoTarefa(LocalDateTime prazoInicial) {
 		this.valor = prazoInicial.truncatedTo(ChronoUnit.HOURS);
 	}
