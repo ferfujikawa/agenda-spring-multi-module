@@ -5,7 +5,6 @@ CREATE TABLE tarefas (
 	situacao varchar(255) NULL,
 	titulo varchar(255) NULL,
 	visualizada bool NULL,
-	valor varchar(255) NULL,
 	CONSTRAINT tarefas_pkey PRIMARY KEY (id)
 );
 
