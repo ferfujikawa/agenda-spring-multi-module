@@ -11,10 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.DataTableDTO;
 import com.agendaspring.dominio.dtos.TarefaDTO;
+import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.infra.services.ITarefaService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,14 +61,26 @@ public class TarefaController {
 	public String cadastrarTarefa(
 		final Model model,
 		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
-		BindingResult result) {
+		BindingResult result,
+		final RedirectAttributes redirectAttributes) {
 		
 		if (result.hasErrors()) {
 			return exibirFormularioCadastroTarefa(tarefa);
 		}
 		
-		tarefaService.cadastrarTarefa(tarefa);
+		Tarefa tarefaCadastrada = tarefaService.cadastrarTarefa(tarefa);
+
+		redirectAttributes.addFlashAttribute("tarefa", new TarefaDTO(tarefaCadastrada));
+		return "redirect:/tarefas/confirmacao-cadastro";
+	}
+
+	@GetMapping("confirmacao-cadastro")
+	public String exibirConfirmacaoCadastro(@ModelAttribute("tarefa") TarefaDTO tarefa) {
 		
-		return "redirect:/tarefas";
+		if (tarefa.getId() == null) {
+			return "redirect:/tarefas";
+		}
+		
+		return "tarefas/confirmacao-cadastro";
 	}
 }

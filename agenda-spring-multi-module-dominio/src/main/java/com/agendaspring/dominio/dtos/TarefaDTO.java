@@ -15,6 +15,8 @@ public class TarefaDTO {
 	private String situacao;
 	private LocalDateTime prazo;
 	private Long horasParaPrazo;
+
+    protected TarefaDTO() {}
 	
 	public TarefaDTO(UUID id, String titulo, LocalDateTime dataCadastro, Boolean visualizada, String situacao,
 			LocalDateTime prazo) {
