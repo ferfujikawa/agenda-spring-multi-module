@@ -1,4 +1,4 @@
-package com.agendaspring.web.dtos;
+package com.agendaspring.dominio.dtos;
 
 import java.util.List;
 

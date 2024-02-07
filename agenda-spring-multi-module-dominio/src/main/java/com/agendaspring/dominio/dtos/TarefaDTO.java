@@ -1,4 +1,4 @@
-package com.agendaspring.web.dtos;
+package com.agendaspring.dominio.dtos;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
