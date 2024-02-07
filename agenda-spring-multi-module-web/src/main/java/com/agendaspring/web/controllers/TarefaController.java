@@ -1,18 +1,25 @@
 package com.agendaspring.web.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
+import com.agendaspring.dominio.dtos.DataTableDTO;
+import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.infra.services.ITarefaService;
-import com.agendaspring.web.dtos.DataTableDTO;
-import com.agendaspring.web.dtos.TarefaDTO;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("tarefas")
@@ -40,5 +47,26 @@ public class TarefaController {
 		Pageable pageable = PageRequest.of(numeroPagina, tamanhoPagina, Sort.by(Sort.Direction.ASC, "prazo.valor"));
 		
 		return new DataTableDTO<TarefaDTO>(draw, tarefaService.listarTarefas(pageable).map(t -> new TarefaDTO(t)));
+	}
+
+	@GetMapping("nova")
+	public String exibirFormularioCadastroTarefa(@ModelAttribute("tarefa") CadastroTarefaDTO tarefa) {
+		
+		return "tarefas/nova";
+	}
+	
+	@PostMapping("nova")
+	public String cadastrarTarefa(
+		final Model model,
+		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
+		BindingResult result) {
+		
+		if (result.hasErrors()) {
+			return exibirFormularioCadastroTarefa(tarefa);
+		}
+		
+		tarefaService.cadastrarTarefa(tarefa);
+		
+		return "redirect:/tarefas";
 	}
 }
