@@ -1,12 +1,15 @@
 package com.agendaspring.web.controllers;
 
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.agendaspring.infra.services.ITarefaService;
+import com.agendaspring.web.dtos.DataTableDTO;
 import com.agendaspring.web.dtos.TarefaDTO;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +24,21 @@ public class TarefaController {
         this.tarefaService = tarefaService;
     }
 
-    @GetMapping
-	public String exibirPaginaListaTarefas(Model model, Pageable paginacao) {
+    @GetMapping(produces = "text/html")
+	public String exibirPaginaListaTarefas() {
 		
-        Page<TarefaDTO> tarefas = tarefaService.listarTarefas(paginacao)
-            .map(t -> new TarefaDTO(t));
-
-        model.addAttribute("tarefas", tarefas);
-
 		return "tarefas/index";
 	}
-    
+	
+	@GetMapping(produces = "application/json")
+	public @ResponseBody DataTableDTO<TarefaDTO> listarTarefas(
+			@RequestParam("draw") int draw,
+			@RequestParam("start") int inicioPagina,
+            @RequestParam("length") int tamanhoPagina) {
+		
+		int numeroPagina = inicioPagina / tamanhoPagina;
+		Pageable pageable = PageRequest.of(numeroPagina, tamanhoPagina, Sort.by(Sort.Direction.ASC, "prazo.valor"));
+		
+		return new DataTableDTO<TarefaDTO>(draw, tarefaService.listarTarefas(pageable).map(t -> new TarefaDTO(t)));
+	}
 }
