@@ -117,7 +117,6 @@ public class TarefaController {
 
 	@PostMapping("nova")
 	public String cadastrarTarefa(
-		final Model model,
 		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
 		BindingResult result,
 		final RedirectAttributes redirectAttributes) {
@@ -134,7 +133,6 @@ public class TarefaController {
 
 	@PostMapping("{id}/registrar-anotacao")
 	public String registrarAnotacao(
-			final Model model,
 			@PathVariable UUID id,
 			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
@@ -155,6 +153,16 @@ public class TarefaController {
 	public String marcarNaoVisualizada(@PathVariable UUID id) {
 		
 		tarefaService.marcarTarefaNaoVisualizada(id);
+		
+		return "redirect:/tarefas";
+	}
+
+	@PutMapping("{id}/dar-andamento")
+	public String darAndamento(
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		tarefaService.darAndamento(id, registroAnotacao);
 		
 		return "redirect:/tarefas";
 	}
