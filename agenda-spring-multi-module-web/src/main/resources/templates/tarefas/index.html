@@ -143,8 +143,8 @@
                            			'title="Dar andamento">' +
                         			'</a>';
                        		}
-                    		
-                    		if (row.podeMarcarComoVisualizada) {
+
+							if (row.podeMarcarComoVisualizada) {
                        			retorno += '<button class="btn btn-warning fa fa-eye" ' +
                                		'title="Marcar como visualizada" ' +
 									'data-bs-toggle="modal" ' +
@@ -160,6 +160,13 @@
 									'data-bs-target="#modalMarcarComoNaoVisualizada" ' +
 									'data-bs-tarefa-id="' + data + '">' +
                            			'</button>';
+                       		}
+
+							if (row.podeCancelar) {
+                       			retorno += '<a href="/tarefas/' + data + '/cancelar" ' +
+                           			'class="btn btn-danger fa fa-times-circle" ' +
+                           			'title="Cancelar">' +
+                            		'</a>';
                        		}
                        		
                        		retorno += '</div>';
