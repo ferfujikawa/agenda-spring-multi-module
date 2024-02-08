@@ -198,4 +198,14 @@ public class TarefaController {
 		
 		return "redirect:/tarefas";
 	}
+
+	@PutMapping("{id}/concluir")
+	public String concluir(
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		tarefaService.concluir(id, registroAnotacao);
+		
+		return "redirect:/tarefas";
+	}
 }
