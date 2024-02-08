@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.RegistrarAnotacaoTarefaDTO;
-import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.HistoricoTarefa;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.repositories.ITarefaRepository;
