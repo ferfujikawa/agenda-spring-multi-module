@@ -177,4 +177,14 @@ public class TarefaController {
 		
 		return "redirect:/tarefas";
 	}
+
+	@PutMapping("{id}/cancelar")
+	public String cancelar(
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		tarefaService.cancelar(id, registroAnotacao);
+		
+		return "redirect:/tarefas";
+	}
 }
