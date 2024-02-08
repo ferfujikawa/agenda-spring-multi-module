@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.RegistrarAnotacaoTarefaDTO;
+import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.HistoricoTarefa;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.repositories.ITarefaRepository;
@@ -99,6 +100,20 @@ public class TarefaService implements ITarefaService {
 		
 		if (tarefa.isPresent()) {
 			tarefa.get().darAndamento(registroAnotacao.getAnotacao());
+			return true;
+		}
+		
+		return false;
+    }
+
+    @Override
+    @Transactional
+    public Boolean cancelar(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao) {
+        
+        Optional<Tarefa> tarefa = repositorio.findById(id);
+		
+		if (tarefa.isPresent()) {
+			tarefa.get().cancelar(registroAnotacao.getAnotacao());
 			return true;
 		}
 		

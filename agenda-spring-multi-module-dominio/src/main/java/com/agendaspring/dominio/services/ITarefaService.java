@@ -28,4 +28,6 @@ public interface ITarefaService {
     Boolean registrarAnotacao(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
 
     Boolean darAndamento(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
+
+    Boolean cancelar(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
 }
