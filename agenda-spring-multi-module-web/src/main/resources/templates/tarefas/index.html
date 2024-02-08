@@ -73,6 +73,28 @@
 		</div>
 	</div>
 
+	<!-- Modal Concluir -->
+	<div class="modal fade" id="modalConcluir" tabindex="-1" aria-labelledby="modalConcluir" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="formConcluir" th:method="put">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">Concluir tarefa</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Confirma a conclusão da tarefa?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+						<a href="" class="btn btn-warning" id="lnkConcluirComAnotacao">Sim, com anotação</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<th:block th:replace="~{fragmentos/arquivosDatatables :: rodape}" />
 	
 	<script>
@@ -91,6 +113,16 @@
 				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
 				const url = "/tarefas/" + tarefaId + "/marcar-nao-visualizada";
 				$('#formMarcarNaoVisualizada').attr('action', url);
+			});
+		}
+
+		const modalConcluir = $('#modalConcluir');
+		if (modalConcluir) {
+			$(modalConcluir).on('show.bs.modal', event => {
+				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
+				const url = "/tarefas/" + tarefaId + "/concluir";
+				$('#formConcluir').attr('action', url);
+				$('#lnkConcluirComAnotacao').attr('href', url);
 			});
 		}
 
@@ -160,6 +192,15 @@
 									'data-bs-target="#modalMarcarComoNaoVisualizada" ' +
 									'data-bs-tarefa-id="' + data + '">' +
                            			'</button>';
+                       		}
+
+							if (row.podeConcluir) {
+                       			retorno += '<button class="btn btn-success fa fa-check-circle" ' +
+                           			'title="Concluir" ' +
+                           			'data-bs-toggle="modal" ' +
+									'data-bs-target="#modalConcluir" ' +
+									'data-bs-tarefa-id="' + data + '">' +
+                            		'</button>';
                        		}
 
 							if (row.podeCancelar) {
