@@ -2,6 +2,7 @@ package com.agendaspring.dominio.repositories;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,5 @@ public interface ITarefaRepository {
 
     Boolean existeTarefaComMesmoPrazo(LocalDateTime horario);
 
-    Optional<Tarefa> findById(Long id);
+    Optional<Tarefa> findById(UUID id);
 }
