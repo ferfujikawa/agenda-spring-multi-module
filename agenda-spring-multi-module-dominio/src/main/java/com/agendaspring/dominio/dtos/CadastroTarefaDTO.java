@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.agendaspring.dominio.validators.PrazoNaoConflitante;
+
 public class CadastroTarefaDTO {
 			
 	@NotBlank(message = "É necessário informar um título para a tarefa")
@@ -16,6 +18,7 @@ public class CadastroTarefaDTO {
 	@NotNull(message = "É necessário informar um prazo para a tarefa")
 	@FutureOrPresent(message = "O prazo da tarefa não pode ser retroativo")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	@PrazoNaoConflitante(message = "O prazo está em conflito com outra tarefa")
 	private LocalDateTime prazo;
 	
 	private String anotacao;
