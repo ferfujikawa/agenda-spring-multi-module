@@ -22,4 +22,8 @@ public class SituacaoTarefa {
     public ESituacaoTarefa getValor() {
         return valor;
     }
+
+    public Boolean podeMarcarNaoVisualizada() {
+		return this.valor == ESituacaoTarefa.ABERTA;
+	}
 }

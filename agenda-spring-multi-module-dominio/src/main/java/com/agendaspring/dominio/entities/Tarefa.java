@@ -69,5 +69,31 @@ public class Tarefa {
 
     public PrazoTarefa getPrazo() {
         return prazo;
-        }    
+    }
+
+    public Boolean marcarComoVisualizada(String anotacao) {
+		if (this.podeMarcarComoVisualizada()) {
+			visualizada = true;
+			return true;
+		}
+		
+		return false;
+	}
+
+	public Boolean marcarComoNaoVisualizada(String anotacao) {
+		if (this.podeMarcarComoNaoVisuazalida()) {
+			visualizada = false;
+			return true;
+		}
+
+		return false;
+	}
+
+    private Boolean podeMarcarComoVisualizada() {
+        return !this.visualizada;
+    }
+
+    private Boolean podeMarcarComoNaoVisuazalida() {
+        return this.situacao.podeMarcarNaoVisualizada() && visualizada;
+    }
 }
