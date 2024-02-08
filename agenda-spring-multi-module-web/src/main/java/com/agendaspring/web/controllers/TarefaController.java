@@ -1,5 +1,7 @@
 package com.agendaspring.web.controllers;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +23,9 @@ import com.agendaspring.dominio.services.ITarefaService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RequestMapping("tarefas")
@@ -82,5 +86,21 @@ public class TarefaController {
 		}
 
 		return "tarefas/confirmacao-cadastro";
+	}
+
+	@PutMapping("{id}/marcar-visualizada")
+	public String marcarVisualizada(@PathVariable UUID id) {
+		
+		tarefaService.marcarTarefaVisualizada(id);
+		
+		return "redirect:/tarefas";
+	}
+	
+	@PutMapping("{id}/marcar-nao-visualizada")
+	public String marcarNaoVisualizada(@PathVariable UUID id) {
+		
+		tarefaService.marcarTarefaNaoVisualizada(id);
+		
+		return "redirect:/tarefas";
 	}
 }
