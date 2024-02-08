@@ -19,12 +19,13 @@ public class TarefaDTO {
     private Boolean podeMarcarComoNaoVisualizada;
     private Boolean podeDarAndamento;
     private Boolean podeCancelar;
+    private Boolean podeConcluir;
 
     protected TarefaDTO() {}
 	
 	public TarefaDTO(UUID id, String titulo, LocalDateTime dataCadastro, Boolean visualizada, String situacao,
 			LocalDateTime prazo, Boolean podeMarcarComoVisualizada, Boolean podeMarcarComoNaoVisualizada,
-            Boolean podeDarAndamento, Boolean podeCancelar) {
+            Boolean podeDarAndamento, Boolean podeCancelar, Boolean podeConcluir) {
 		this.id = id;
 		this.titulo = titulo;
 		this.dataCadastro = dataCadastro;
@@ -35,6 +36,7 @@ public class TarefaDTO {
         this.podeMarcarComoNaoVisualizada = podeMarcarComoNaoVisualizada;
         this.podeDarAndamento = podeDarAndamento;
         this.podeCancelar = podeCancelar;
+        this.podeConcluir = podeConcluir;
 		
 		LocalDateTime horaAtual = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
 		this.horasParaPrazo = horaAtual.until(this.prazo, ChronoUnit.HOURS); 
@@ -50,7 +52,8 @@ public class TarefaDTO {
             tarefa.podeMarcarComoVisualizada(),
             tarefa.podeMarcarComoNaoVisuazalida(),
             tarefa.podeDarAndamento(),
-            tarefa.podeCancelar());
+            tarefa.podeCancelar(),
+            tarefa.podeConcluir());
 	}
 
     public UUID getId() {
@@ -139,5 +142,13 @@ public class TarefaDTO {
 
     public void setPodeCancelar(Boolean podeCancelar) {
         this.podeCancelar = podeCancelar;
+    }
+
+    public Boolean getPodeConcluir() {
+        return podeConcluir;
+    }
+
+    public void setPodeConcluir(Boolean podeConcluir) {
+        this.podeConcluir = podeConcluir;
     }
 }
