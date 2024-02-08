@@ -81,6 +81,22 @@ public class Tarefa {
         return prazo;
     }
 
+    public Boolean podeMarcarComoVisualizada() {
+        return !this.visualizada;
+    }
+
+    public Boolean podeMarcarComoNaoVisuazalida() {
+        return this.situacao.podeMarcarNaoVisualizada() && visualizada;
+    }
+
+    public Boolean podeDarAndamento() {
+        return this.situacao.podeDarAndamento();
+    }
+
+    public Boolean podeCancelar() {
+        return this.situacao.podeCancelar();
+    }
+
     public Boolean marcarComoVisualizada(String anotacao) {
 		if (this.podeMarcarComoVisualizada()) {
             historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa marcada como visualizada"));
@@ -101,18 +117,6 @@ public class Tarefa {
 		return false;
 	}
 
-    public Boolean podeMarcarComoVisualizada() {
-        return !this.visualizada;
-    }
-
-    public Boolean podeMarcarComoNaoVisuazalida() {
-        return this.situacao.podeMarcarNaoVisualizada() && visualizada;
-    }
-
-    public Boolean podeDarAndamento() {
-        return this.situacao.podeDarAndamento();
-    }
-
     public Boolean registrarAnotacao(String anotacao) {
 		historicos.add(new HistoricoTarefa(this, anotacao, "Inclusão de anotação à tarefa"));
 		visualizada = true;
@@ -120,11 +124,25 @@ public class Tarefa {
 	}
 
     public Boolean darAndamento(String anotacao) {
-		if (this.situacao.darAndamento()) {
-			historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa alterada para em andamento"));
-			visualizada = true;
-			return true;
+		if (this.podeDarAndamento()) {
+            if (this.situacao.darAndamento()) {
+                historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa alterada para em andamento"));
+                visualizada = true;
+                return true;
+            }
 		}
+
+		return false;
+	}
+
+    public Boolean cancelar(String anotacao) {
+		if (this.podeCancelar()) {
+            if (this.situacao.cancelar()) {
+                historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa cancelada"));
+			    visualizada = true;
+			    return true;
+            }
+        }
 
 		return false;
 	}

@@ -1,5 +1,7 @@
 package com.agendaspring.dominio.valueobjects;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embeddable;
@@ -37,7 +39,21 @@ public class SituacaoTarefa {
 		return false;
     }
 
+    public Boolean cancelar() {
+        
+		if (this.podeCancelar()) {
+			this.valor = ESituacaoTarefa.CANCELADA;
+			return true;
+		}
+		
+		return false;
+	}
+
     public Boolean podeDarAndamento() {
         return this.valor == ESituacaoTarefa.ABERTA;
     }
+
+    public Boolean podeCancelar() {
+		return Arrays.asList(ESituacaoTarefa.ABERTA, ESituacaoTarefa.EM_ANDAMENTO).contains(this.valor);
+	}
 }
