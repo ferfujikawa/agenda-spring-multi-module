@@ -13,7 +13,7 @@ CREATE TABLE historicos_tarefa (
 	anotacao varchar(255) NULL,
 	data_historico timestamp(6) NULL,
 	evento varchar(255) NULL,
-	tarefa_id uuid NULL,
+	tarefa_id uuid NOT NULL,
 	CONSTRAINT historicos_tarefa_pkey PRIMARY KEY (id),
 	CONSTRAINT historicos_tarefa_tarefa_fk FOREIGN KEY (tarefa_id) REFERENCES tarefas(id)
 );
