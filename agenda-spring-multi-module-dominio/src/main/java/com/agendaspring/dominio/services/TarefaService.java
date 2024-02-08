@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.agendaspring.dominio.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.RegistrarAnotacaoTarefaDTO;
 import com.agendaspring.dominio.entities.HistoricoTarefa;
@@ -127,6 +128,20 @@ public class TarefaService implements ITarefaService {
 		
 		if (tarefa.isPresent()) {
 			tarefa.get().concluir(registroAnotacao.getAnotacao());
+			return true;
+		}
+		
+		return false;
+    }
+
+    @Override
+    @Transactional
+    public Boolean alterarPrazoTarefa(UUID id, AlteracaoPrazoTarefaDTO dto) {
+        
+        Optional<Tarefa> tarefa = repositorio.findById(id);
+		
+		if (tarefa.isPresent()) {
+			tarefa.get().alterarPrazo(dto.getPrazo(), dto.getAnotacao());
 			return true;
 		}
 		

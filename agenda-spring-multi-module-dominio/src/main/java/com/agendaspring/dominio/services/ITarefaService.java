@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.agendaspring.dominio.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.RegistrarAnotacaoTarefaDTO;
 import com.agendaspring.dominio.entities.HistoricoTarefa;
@@ -32,4 +33,6 @@ public interface ITarefaService {
     Boolean cancelar(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
 
     Boolean concluir(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
+
+    Boolean alterarPrazoTarefa(UUID id, AlteracaoPrazoTarefaDTO dto);
 }
