@@ -1,5 +1,7 @@
 package com.agendaspring.web.controllers;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.agendaspring.dominio.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.DataTableDTO;
 import com.agendaspring.dominio.dtos.HistoricoTarefaDTO;
@@ -135,6 +138,20 @@ public class TarefaController {
 		model.addAttribute("tarefaId", id);
 		
 		return "tarefas/concluir";
+	}
+
+	@GetMapping("{id}/alterar-prazo")
+	public String exibirFormularioAlterarPrazo(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("tarefa") AlteracaoPrazoTarefaDTO tarefa) {
+
+		LocalDateTime prazoMinimo = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS).plusHours(1);
+
+		model.addAttribute("tarefaId", id);
+		model.addAttribute("prazoMinimo", prazoMinimo);
+
+		return "tarefas/alterar-prazo";
 	}
 
 	@PostMapping("nova")
