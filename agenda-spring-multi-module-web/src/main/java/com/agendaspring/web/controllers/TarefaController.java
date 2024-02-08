@@ -104,6 +104,17 @@ public class TarefaController {
 		return "tarefas/registrar-anotacao";
 	}
 
+	@GetMapping("{id}/dar-andamento")
+	public String exibirFormularioDarAndamento(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		model.addAttribute("tarefaId", id);
+		
+		return "tarefas/dar-andamento";
+	}
+
 	@PostMapping("nova")
 	public String cadastrarTarefa(
 		final Model model,

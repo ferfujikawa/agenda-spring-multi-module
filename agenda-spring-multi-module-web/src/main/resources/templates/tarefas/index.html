@@ -136,6 +136,13 @@
                        			'class="btn btn-success fa fa-sticky-note" ' +
                        			'title="Registrar anotação">' +
                         		'</a>';
+
+							if (row.podeDarAndamento) {
+                       			retorno += '<a href="/tarefas/' + data + '/dar-andamento" ' +
+                           			'class="btn btn-primary fa fa-step-forward" ' +
+                           			'title="Dar andamento">' +
+                        			'</a>';
+                       		}
                     		
                     		if (row.podeMarcarComoVisualizada) {
                        			retorno += '<button class="btn btn-warning fa fa-eye" ' +
