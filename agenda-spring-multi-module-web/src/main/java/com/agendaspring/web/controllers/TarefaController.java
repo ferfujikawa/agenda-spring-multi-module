@@ -225,4 +225,20 @@ public class TarefaController {
 		
 		return "redirect:/tarefas";
 	}
+
+	@PutMapping("{id}/alterar-prazo")
+	public String alterarPrazo(
+			final Model model,
+			@ModelAttribute("tarefa") @Valid AlteracaoPrazoTarefaDTO tarefa,
+			BindingResult result,
+			@PathVariable UUID id) {
+		
+		if (result.hasErrors()) {
+			return exibirFormularioAlterarPrazo(model, id, tarefa);
+		}
+
+		tarefaService.alterarPrazoTarefa(id, tarefa);
+
+		return "redirect:/tarefas";
+	}
 }
