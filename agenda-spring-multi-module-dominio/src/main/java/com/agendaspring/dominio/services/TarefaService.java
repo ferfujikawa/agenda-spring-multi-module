@@ -80,6 +80,7 @@ public class TarefaService implements ITarefaService {
     }
 
     @Override
+    @Transactional
     public Boolean registrarAnotacao(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao) {
         
         Optional<Tarefa> tarefa = repositorio.findById(id);
