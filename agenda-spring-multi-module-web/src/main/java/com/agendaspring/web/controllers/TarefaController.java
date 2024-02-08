@@ -17,7 +17,7 @@ import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.DataTableDTO;
 import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.Tarefa;
-import com.agendaspring.infra.services.ITarefaService;
+import com.agendaspring.dominio.services.ITarefaService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -80,7 +80,7 @@ public class TarefaController {
 		if (tarefa.getId() == null) {
 			return "redirect:/tarefas";
 		}
-		
+
 		return "tarefas/confirmacao-cadastro";
 	}
 }

@@ -1,4 +1,4 @@
-package com.agendaspring.infra.services;
+package com.agendaspring.dominio.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

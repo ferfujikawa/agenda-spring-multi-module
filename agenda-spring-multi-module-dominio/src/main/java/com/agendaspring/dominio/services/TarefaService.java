@@ -1,4 +1,4 @@
-package com.agendaspring.infra.services;
+package com.agendaspring.dominio.services;
 
 import javax.transaction.Transactional;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.entities.Tarefa;
-import com.agendaspring.infra.repositories.ITarefaRepository;
+import com.agendaspring.dominio.repositories.ITarefaRepository;
 
 @Service
 public class TarefaService implements ITarefaService {
