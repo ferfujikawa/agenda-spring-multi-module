@@ -118,4 +118,18 @@ public class TarefaService implements ITarefaService {
 		
 		return false;
     }
+
+    @Override
+    @Transactional
+    public Boolean concluir(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao) {
+        
+        Optional<Tarefa> tarefa = repositorio.findById(id);
+		
+		if (tarefa.isPresent()) {
+			tarefa.get().concluir(registroAnotacao.getAnotacao());
+			return true;
+		}
+		
+		return false;
+    }
 }
