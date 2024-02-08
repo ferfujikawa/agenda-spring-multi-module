@@ -1,5 +1,7 @@
 package com.agendaspring.dominio.services;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -31,5 +33,11 @@ public class TarefaService implements ITarefaService {
         
         Tarefa tarefaCadastrada = repositorio.save(new Tarefa(tarefa.getTitulo(), tarefa.getPrazo(), tarefa.getAnotacao()));
 		return tarefaCadastrada;
+    }
+
+    @Override
+    public Boolean existeTarefaComMesmoPrazo(LocalDateTime horario) {
+        
+        return repositorio.existeTarefaComMesmoPrazo(horario);
     }
 }
