@@ -125,7 +125,12 @@
                     },
 					{title: 'Ações', data: 'id', width: '300px',
                     	render: (data, type, row, meta) => {
-                    		let retorno = '<div class="btn-group">'; 
+                    		let retorno = '<div class="btn-group">';
+
+							retorno += '<a href="/tarefas/' + data + '/historico" ' +
+							'class="btn btn-secondary fa fa-history" ' +
+							'title="Visualizar histórico">' + 
+							'</a>';
                     		
                     		if (row.podeMarcarComoVisualizada) {
                        			retorno += '<button class="btn btn-warning fa fa-eye" ' +

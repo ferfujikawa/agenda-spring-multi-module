@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.DataTableDTO;
+import com.agendaspring.dominio.dtos.HistoricoTarefaDTO;
+import com.agendaspring.dominio.dtos.ListaPaginadaDTO;
 import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.services.ITarefaService;
@@ -86,6 +89,24 @@ public class TarefaController {
 		}
 
 		return "tarefas/confirmacao-cadastro";
+	}
+
+	@GetMapping("{id}/historico")
+	public String exibirHistorico(
+		final Model model,
+		@PathVariable UUID id,
+		@RequestParam(name = "pagina", defaultValue = "1") int pagina,
+        @RequestParam(name = "tamanhoPagina", defaultValue = "10") int tamanhoPagina) {
+		
+		Pageable paginacao = PageRequest.of(pagina - 1, tamanhoPagina, Sort.by(Sort.Direction.DESC, "h.dataHistorico"));
+		Page<HistoricoTarefaDTO> historicos = tarefaService.listarHistoricosDeTarefa(id, paginacao)
+			.map(h -> new HistoricoTarefaDTO(h));
+		
+		ListaPaginadaDTO<HistoricoTarefaDTO> listaPaginada = new ListaPaginadaDTO<>(historicos);
+		model.addAttribute("tarefaId", id);
+		model.addAttribute("historicos", listaPaginada);
+		
+		return "tarefas/historico";
 	}
 
 	@PutMapping("{id}/marcar-visualizada")
