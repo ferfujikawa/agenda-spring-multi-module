@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+import com.agendaspring.dominio.validators.constraints.PrazoNaoConflitanteValidator;
+
 @Constraint(validatedBy = PrazoNaoConflitanteValidator.class)
 @Target({ FIELD })
 @Retention(RUNTIME)
