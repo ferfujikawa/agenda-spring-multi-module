@@ -65,23 +65,6 @@ public class TarefaController {
 		return "tarefas/nova";
 	}
 	
-	@PostMapping("nova")
-	public String cadastrarTarefa(
-		final Model model,
-		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
-		BindingResult result,
-		final RedirectAttributes redirectAttributes) {
-		
-		if (result.hasErrors()) {
-			return exibirFormularioCadastroTarefa(tarefa);
-		}
-		
-		Tarefa tarefaCadastrada = tarefaService.cadastrarTarefa(tarefa);
-
-		redirectAttributes.addFlashAttribute("tarefa", new TarefaDTO(tarefaCadastrada));
-		return "redirect:/tarefas/confirmacao-cadastro";
-	}
-
 	@GetMapping("confirmacao-cadastro")
 	public String exibirConfirmacaoCadastro(@ModelAttribute("tarefa") TarefaDTO tarefa) {
 		
@@ -119,6 +102,34 @@ public class TarefaController {
 		model.addAttribute("tarefaId", id);
 		
 		return "tarefas/registrar-anotacao";
+	}
+
+	@PostMapping("nova")
+	public String cadastrarTarefa(
+		final Model model,
+		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
+		BindingResult result,
+		final RedirectAttributes redirectAttributes) {
+		
+		if (result.hasErrors()) {
+			return exibirFormularioCadastroTarefa(tarefa);
+		}
+		
+		Tarefa tarefaCadastrada = tarefaService.cadastrarTarefa(tarefa);
+
+		redirectAttributes.addFlashAttribute("tarefa", new TarefaDTO(tarefaCadastrada));
+		return "redirect:/tarefas/confirmacao-cadastro";
+	}
+
+	@PostMapping("{id}/registrar-anotacao")
+	public String registrarAnotacao(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		tarefaService.registrarAnotacao(id, registroAnotacao);
+		
+		return "redirect:/tarefas";
 	}
 
 	@PutMapping("{id}/marcar-visualizada")
