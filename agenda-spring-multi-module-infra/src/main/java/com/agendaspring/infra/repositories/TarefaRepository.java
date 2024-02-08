@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.agendaspring.dominio.entities.HistoricoTarefa;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.repositories.ITarefaRepository;
 
@@ -22,4 +23,8 @@ public interface TarefaRepository extends ITarefaRepository, JpaRepository<Taref
     @Override
     @Query("SELECT CASE WHEN count(t) > 0 THEN true ELSE false END FROM Tarefa t WHERE prazo.valor = :horario")
     Boolean existeTarefaComMesmoPrazo(LocalDateTime horario);
+
+    @Override
+    @Query("SELECT h FROM Tarefa t JOIN t.historicos h WHERE t.id = :id")
+	Page<HistoricoTarefa> listarHistoricosDeTarefa(UUID id, Pageable paginacao);
 }

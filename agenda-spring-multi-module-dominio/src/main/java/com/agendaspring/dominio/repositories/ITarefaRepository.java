@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.agendaspring.dominio.entities.HistoricoTarefa;
 import com.agendaspring.dominio.entities.Tarefa;
 
 public interface ITarefaRepository {
@@ -18,4 +19,6 @@ public interface ITarefaRepository {
     Boolean existeTarefaComMesmoPrazo(LocalDateTime horario);
 
     Optional<Tarefa> findById(UUID id);
+
+    Page<HistoricoTarefa> listarHistoricosDeTarefa(UUID id, Pageable paginacao);
 }
