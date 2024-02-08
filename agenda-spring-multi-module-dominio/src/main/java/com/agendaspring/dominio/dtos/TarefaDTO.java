@@ -15,17 +15,21 @@ public class TarefaDTO {
 	private String situacao;
 	private LocalDateTime prazo;
 	private Long horasParaPrazo;
+    private Boolean podeMarcarComoVisualizada;
+    private Boolean podeMarcarComoNaoVisualizada;
 
     protected TarefaDTO() {}
 	
 	public TarefaDTO(UUID id, String titulo, LocalDateTime dataCadastro, Boolean visualizada, String situacao,
-			LocalDateTime prazo) {
+			LocalDateTime prazo, Boolean podeMarcarComoVisualizada, Boolean podeMarcarComoNaoVisualizada) {
 		this.id = id;
 		this.titulo = titulo;
 		this.dataCadastro = dataCadastro;
 		this.visualizada = visualizada;
 		this.situacao = situacao;
 		this.prazo = prazo;
+        this.podeMarcarComoVisualizada = podeMarcarComoVisualizada;
+        this.podeMarcarComoNaoVisualizada = podeMarcarComoNaoVisualizada;
 		
 		LocalDateTime horaAtual = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS);
 		this.horasParaPrazo = horaAtual.until(this.prazo, ChronoUnit.HOURS); 
@@ -37,7 +41,9 @@ public class TarefaDTO {
 			tarefa.getDataCadastro(),
 			tarefa.getVisualizada(),
 			tarefa.getSituacao().getValor().getDescricao(),
-			tarefa.getPrazo().getValor());
+			tarefa.getPrazo().getValor(),
+            tarefa.podeMarcarComoVisualizada(),
+            tarefa.podeMarcarComoNaoVisuazalida());
 	}
 
     public UUID getId() {
@@ -94,5 +100,21 @@ public class TarefaDTO {
 
     public void setHorasParaPrazo(Long horasParaPrazo) {
         this.horasParaPrazo = horasParaPrazo;
+    }
+
+    public Boolean getPodeMarcarComoVisualizada() {
+        return podeMarcarComoVisualizada;
+    }
+
+    public void setPodeMarcarComoVisualizada(Boolean podeMarcarComoVisualizada) {
+        this.podeMarcarComoVisualizada = podeMarcarComoVisualizada;
+    }
+
+    public Boolean getPodeMarcarComoNaoVisualizada() {
+        return podeMarcarComoNaoVisualizada;
+    }
+
+    public void setPodeMarcarComoNaoVisualizada(Boolean podeMarcarComoNaoVisualizada) {
+        this.podeMarcarComoNaoVisualizada = podeMarcarComoNaoVisualizada;
     }
 }
