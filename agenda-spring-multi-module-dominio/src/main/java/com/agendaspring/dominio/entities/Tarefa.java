@@ -97,6 +97,10 @@ public class Tarefa {
         return this.situacao.podeCancelar();
     }
 
+    public Boolean podeConcluir() {
+        return this.situacao.podeConcluir();
+    }
+
     public Boolean marcarComoVisualizada(String anotacao) {
 		if (this.podeMarcarComoVisualizada()) {
             historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa marcada como visualizada"));
@@ -144,6 +148,18 @@ public class Tarefa {
             }
         }
 
+		return false;
+	}
+
+    public Boolean concluir(String anotacao) {
+		if (this.podeConcluir()) {
+            if (this.situacao.concluir()) {
+                historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa concluída"));
+                visualizada = true;
+                return true;
+            }
+        }
+        
 		return false;
 	}
 }

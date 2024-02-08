@@ -29,6 +29,18 @@ public class SituacaoTarefa {
 		return this.valor == ESituacaoTarefa.ABERTA;
 	}
 
+    public Boolean podeDarAndamento() {
+        return this.valor == ESituacaoTarefa.ABERTA;
+    }
+
+    public Boolean podeCancelar() {
+		return Arrays.asList(ESituacaoTarefa.ABERTA, ESituacaoTarefa.EM_ANDAMENTO).contains(this.valor);
+	}
+
+    public Boolean podeConcluir() {
+		return Arrays.asList(ESituacaoTarefa.ABERTA, ESituacaoTarefa.EM_ANDAMENTO).contains(this.valor);
+	}
+
     public boolean darAndamento() {
         
         if (this.podeDarAndamento()) {
@@ -49,11 +61,13 @@ public class SituacaoTarefa {
 		return false;
 	}
 
-    public Boolean podeDarAndamento() {
-        return this.valor == ESituacaoTarefa.ABERTA;
-    }
+    public Boolean concluir() {
 
-    public Boolean podeCancelar() {
-		return Arrays.asList(ESituacaoTarefa.ABERTA, ESituacaoTarefa.EM_ANDAMENTO).contains(this.valor);
+		if (this.podeConcluir()) {
+			this.valor = ESituacaoTarefa.CONCLUIDA;
+			return true;
+		}
+		
+		return false;
 	}
 }
