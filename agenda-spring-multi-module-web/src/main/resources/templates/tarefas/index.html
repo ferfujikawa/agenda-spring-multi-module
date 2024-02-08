@@ -209,6 +209,13 @@
                            			'title="Cancelar">' +
                             		'</a>';
                        		}
+
+							if (row.podeAlterarPrazo) {
+                       			retorno += '<a href="/tarefas/' + data + '/alterar-prazo" ' +
+									'class="btn btn-primary fa fa-clock" ' +
+									'title="Alterar prazo"> ' +
+									'</a>';
+                       		}
                        		
                        		retorno += '</div>';
                         		
