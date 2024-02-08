@@ -101,6 +101,10 @@ public class Tarefa {
         return this.situacao.podeConcluir();
     }
 
+    public Boolean podeAlterarPrazo() {
+		return this.situacao.podeAlterarPrazo();
+	}
+
     public Boolean marcarComoVisualizada(String anotacao) {
 		if (this.podeMarcarComoVisualizada()) {
             historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa marcada como visualizada"));
@@ -159,7 +163,19 @@ public class Tarefa {
                 return true;
             }
         }
-        
+
+		return false;
+	}
+
+    public Boolean alterarPrazo(LocalDateTime novoPrazo, String anotacao) {
+		if (this.podeAlterarPrazo()) {
+            if (this.prazo.alterar(novoPrazo)) {
+                historicos.add(new HistoricoTarefa(this, anotacao, "Prazo de tarefa alterado"));
+                visualizada = true;
+                return true;
+            }
+        }
+
 		return false;
 	}
 }

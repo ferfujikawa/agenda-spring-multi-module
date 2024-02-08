@@ -41,6 +41,10 @@ public class SituacaoTarefa {
 		return Arrays.asList(ESituacaoTarefa.ABERTA, ESituacaoTarefa.EM_ANDAMENTO).contains(this.valor);
 	}
 
+	public Boolean podeAlterarPrazo() {
+		return Arrays.asList(ESituacaoTarefa.ABERTA, ESituacaoTarefa.EM_ANDAMENTO).contains(this.valor);
+	}
+
     public boolean darAndamento() {
         
         if (this.podeDarAndamento()) {

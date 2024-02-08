@@ -21,4 +21,15 @@ public class PrazoTarefa {
     public LocalDateTime getValor() {
         return valor;
     }
+
+    public Boolean alterar(LocalDateTime novoPrazo) {
+		novoPrazo = novoPrazo.truncatedTo(ChronoUnit.HOURS);
+		
+		if (novoPrazo.isAfter(LocalDateTime.now().truncatedTo(ChronoUnit.HOURS))) {
+			this.valor = novoPrazo;
+			return true;
+		}
+		
+		return false;
+	}
 }
