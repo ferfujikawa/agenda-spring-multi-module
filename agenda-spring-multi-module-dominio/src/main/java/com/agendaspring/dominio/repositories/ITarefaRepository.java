@@ -1,5 +1,7 @@
 package com.agendaspring.dominio.repositories;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -10,4 +12,6 @@ public interface ITarefaRepository {
     Page<Tarefa> listarTarefas(Pageable paginacao);
 
     Tarefa save(Tarefa entity);
+
+    Boolean existeTarefaComMesmoPrazo(LocalDateTime horario);
 }
