@@ -109,4 +109,10 @@ public class Tarefa {
     public Boolean podeMarcarComoNaoVisuazalida() {
         return this.situacao.podeMarcarNaoVisualizada() && visualizada;
     }
+
+    public Boolean registrarAnotacao(String anotacao) {
+		historicos.add(new HistoricoTarefa(this, anotacao, "Inclusão de anotação à tarefa"));
+		visualizada = true;
+		return true;
+	}
 }
