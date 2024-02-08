@@ -11,7 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
-import com.agendaspring.dominio.dtos.TarefaDTO;
+import com.agendaspring.dominio.dtos.HistoricoTarefaDTO;
+import com.agendaspring.dominio.entities.HistoricoTarefa;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.repositories.ITarefaRepository;
 
@@ -68,5 +69,11 @@ public class TarefaService implements ITarefaService {
 		}
 		
 		return null;
+    }
+
+    @Override
+    public Page<HistoricoTarefa> listarHistoricosDeTarefa(UUID tarefaId, Pageable paginacao) {
+        
+        return repositorio.listarHistoricosDeTarefa(tarefaId, paginacao);
     }
 }

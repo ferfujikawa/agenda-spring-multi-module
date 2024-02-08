@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
+import com.agendaspring.dominio.entities.HistoricoTarefa;
 import com.agendaspring.dominio.entities.Tarefa;
 
 public interface ITarefaService {
@@ -20,4 +21,6 @@ public interface ITarefaService {
     Boolean marcarTarefaVisualizada(UUID id);
 
     Boolean marcarTarefaNaoVisualizada(UUID id);
+
+    Page<HistoricoTarefa> listarHistoricosDeTarefa(UUID tarefaId, Pageable paginacao);
 }
