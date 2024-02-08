@@ -2,6 +2,8 @@ package com.agendaspring.dominio.dtos;
 
 import java.time.LocalDateTime;
 
+import com.agendaspring.dominio.entities.HistoricoTarefa;
+
 public class HistoricoTarefaDTO {
 
 	private LocalDateTime dataHistorico;
@@ -13,6 +15,12 @@ public class HistoricoTarefaDTO {
 		this.anotacao = anotacao;
 		this.evento = evento;
 	}
+
+    public HistoricoTarefaDTO(HistoricoTarefa historicoTarefa) {
+        this(historicoTarefa.getDataHistorico(),
+            historicoTarefa.getAnotacao(),
+            historicoTarefa.getEvento());
+    }
 
 	public LocalDateTime getDataHistorico() {
 		return dataHistorico;
