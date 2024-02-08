@@ -1,11 +1,17 @@
 package com.agendaspring.dominio.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +30,10 @@ public class HistoricoTarefa {
 	
     @Column(name = "evento")
 	private String evento;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "tarefa_id")
+	private List<HistoricoTarefa> historicos = new ArrayList<HistoricoTarefa>();
 	
 	protected HistoricoTarefa() {}
 
