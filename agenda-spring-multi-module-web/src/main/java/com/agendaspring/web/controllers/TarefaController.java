@@ -20,6 +20,7 @@ import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
 import com.agendaspring.dominio.dtos.DataTableDTO;
 import com.agendaspring.dominio.dtos.HistoricoTarefaDTO;
 import com.agendaspring.dominio.dtos.ListaPaginadaDTO;
+import com.agendaspring.dominio.dtos.RegistrarAnotacaoTarefaDTO;
 import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.services.ITarefaService;
@@ -107,6 +108,17 @@ public class TarefaController {
 		model.addAttribute("historicos", listaPaginada);
 		
 		return "tarefas/historico";
+	}
+
+	@GetMapping("{id}/registrar-anotacao")
+	public String exibirFormularioRegistrarAnotacao(
+			final Model model,
+			@PathVariable Long id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		model.addAttribute("tarefaId", id);
+		
+		return "tarefas/registrar-anotacao";
 	}
 
 	@PutMapping("{id}/marcar-visualizada")

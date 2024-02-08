@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html th:replace="~{base::layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registrar anotação na Tarefa</title>
+</head>
+<body>
+<section>
+	<div class="card">
+		<div class="card-header">
+            <h3 class="card-title">Nova anotação na Tarefa</h3>
+	  	</div>
+		<div class="card-body">
+		
+		    <form th:action="@{/tarefas/{id}/registrar-anotacao(id=${tarefaId})}" th:object="${registroAnotacao}" th:method="post">
+		        <fieldset>
+		            
+		            <div class="mb-3">
+		                <label for="concluir.html" class="form-label">Anotação</label>
+			                <textarea
+			                    th:field="*{anotacao}"
+			                    class="form-control"
+			                    rows="5"
+			                    placeholder="Escreva a anotação"
+			                    id="anotacao">
+							</textarea>
+		            </div>
+		            
+		            <div class="mb-3">
+		                <input class="btn btn-primary" type="submit" value="Salvar" />
+		            </div>
+		            
+		        </fieldset>
+		    </form>
+	    </div>
+    </div>
+</section>
+</body>
+</html>
