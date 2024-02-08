@@ -126,6 +126,17 @@ public class TarefaController {
 		return "tarefas/cancelar";
 	}
 
+	@GetMapping("{id}/concluir")
+	public String exibirFormularioConcluirComAnotacao(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		model.addAttribute("tarefaId", id);
+		
+		return "tarefas/concluir";
+	}
+
 	@PostMapping("nova")
 	public String cadastrarTarefa(
 		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
