@@ -29,9 +29,71 @@
 		</div>
 	</div>
 
+	<!-- Modal Marcar Como Visualizada -->
+	<div class="modal fade" id="modalMarcarComoVisualizada" tabindex="-1" aria-labelledby="modalMarcarComoVisualizada" aria-hidden="true">
+		
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="formMarcarVisualizada" th:method="put">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">Marcar tarefa como visualizada</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Confirma a marcação da tarefa como visualizada?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- Modal Marcar Como Não Visualizada -->
+	<div class="modal fade" id="modalMarcarComoNaoVisualizada" tabindex="-1" aria-labelledby="modalMarcarComoNaoVisualizada" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="formMarcarNaoVisualizada" th:method="put">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">Marcar tarefa como não visualizada</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Confirma a marcação da tarefa como não visualizada?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<th:block th:replace="~{fragmentos/arquivosDatatables :: rodape}" />
 	
 	<script>
+		const modalMarcarComoVisualizada = $('#modalMarcarComoVisualizada');
+		if (modalMarcarComoVisualizada) {
+			$(modalMarcarComoVisualizada).on('show.bs.modal', event => {
+				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
+				const url = '/tarefas/' + tarefaId + '/marcar-visualizada';
+				$('#formMarcarVisualizada').attr('action', url);
+			});
+		}
+
+		const modalMarcarComoNaoVisualizada = $('#modalMarcarComoNaoVisualizada');
+		if (modalMarcarComoNaoVisualizada) {
+			$(modalMarcarComoNaoVisualizada).on('show.bs.modal', event => {
+				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
+				const url = "/tarefas/" + tarefaId + "/marcar-nao-visualizada";
+				$('#formMarcarNaoVisualizada').attr('action', url);
+			});
+		}
+
 		$(document).ready(() => {
 			new DataTable('#tableTarefas', {
 				serverSide: true,
@@ -49,8 +111,7 @@
 					contentType: 'application/json' 
 				},
 				columns: [
-					{title: '#', data: 'id'},
-                    {title: 'Título', data: 'titulo', width: '35%'},
+					{title: 'Título', data: 'titulo', width: '35%'},
                     {title: 'Situação', data: 'situacao'},
                     {title: 'Prazo', data: 'prazo',
                     	render: (data) => {
@@ -61,6 +122,33 @@
                     	render: (data) => {
                     		return (data) ? 'Sim' : 'Não';
                    		}
+                    },
+					{title: 'Ações', data: 'id', width: '300px',
+                    	render: (data, type, row, meta) => {
+                    		let retorno = '<div class="btn-group">'; 
+                    		
+                    		if (row.podeMarcarComoVisualizada) {
+                       			retorno += '<button class="btn btn-warning fa fa-eye" ' +
+                               		'title="Marcar como visualizada" ' +
+									'data-bs-toggle="modal" ' +
+									'data-bs-target="#modalMarcarComoVisualizada" ' +
+									'data-bs-tarefa-id="' + data + '">' +
+                               		'</button>';
+                       		}
+                       		
+                       		if (row.podeMarcarComoNaoVisualizada) {
+                       			retorno += '<button class="btn btn-warning fa fa-eye-slash" ' +
+                            		'title="Marcar como não visualizada" ' +
+									'data-bs-toggle="modal" ' +
+									'data-bs-target="#modalMarcarComoNaoVisualizada" ' +
+									'data-bs-tarefa-id="' + data + '">' +
+                           			'</button>';
+                       		}
+                       		
+                       		retorno += '</div>';
+                        		
+                       		return retorno;
+                    	}
                     }
 				]
 			});
