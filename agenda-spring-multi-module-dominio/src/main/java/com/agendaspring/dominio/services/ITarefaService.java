@@ -26,4 +26,6 @@ public interface ITarefaService {
     Page<HistoricoTarefa> listarHistoricosDeTarefa(UUID tarefaId, Pageable paginacao);
 
     Boolean registrarAnotacao(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
+
+    Boolean darAndamento(UUID id, RegistrarAnotacaoTarefaDTO registroAnotacao);
 }
