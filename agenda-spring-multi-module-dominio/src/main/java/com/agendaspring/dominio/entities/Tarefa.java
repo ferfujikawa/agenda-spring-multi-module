@@ -89,11 +89,11 @@ public class Tarefa {
 		return false;
 	}
 
-    private Boolean podeMarcarComoVisualizada() {
+    public Boolean podeMarcarComoVisualizada() {
         return !this.visualizada;
     }
 
-    private Boolean podeMarcarComoNaoVisuazalida() {
+    public Boolean podeMarcarComoNaoVisuazalida() {
         return this.situacao.podeMarcarNaoVisualizada() && visualizada;
     }
 }
