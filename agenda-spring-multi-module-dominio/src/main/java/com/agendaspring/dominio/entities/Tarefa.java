@@ -110,9 +110,23 @@ public class Tarefa {
         return this.situacao.podeMarcarNaoVisualizada() && visualizada;
     }
 
+    public Boolean podeDarAndamento() {
+        return this.situacao.podeDarAndamento();
+    }
+
     public Boolean registrarAnotacao(String anotacao) {
 		historicos.add(new HistoricoTarefa(this, anotacao, "Inclusão de anotação à tarefa"));
 		visualizada = true;
 		return true;
+	}
+
+    public Boolean darAndamento(String anotacao) {
+		if (this.situacao.darAndamento()) {
+			historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa alterada para em andamento"));
+			visualizada = true;
+			return true;
+		}
+
+		return false;
 	}
 }

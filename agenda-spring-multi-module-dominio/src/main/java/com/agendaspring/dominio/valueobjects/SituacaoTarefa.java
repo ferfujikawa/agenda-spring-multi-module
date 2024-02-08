@@ -26,4 +26,18 @@ public class SituacaoTarefa {
     public Boolean podeMarcarNaoVisualizada() {
 		return this.valor == ESituacaoTarefa.ABERTA;
 	}
+
+    public boolean darAndamento() {
+        
+        if (this.podeDarAndamento()) {
+			this.valor = ESituacaoTarefa.EM_ANDAMENTO;
+			return true;
+		}
+		
+		return false;
+    }
+
+    public Boolean podeDarAndamento() {
+        return this.valor == ESituacaoTarefa.ABERTA;
+    }
 }
