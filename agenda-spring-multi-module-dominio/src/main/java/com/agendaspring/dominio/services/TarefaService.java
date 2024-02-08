@@ -1,6 +1,8 @@
 package com.agendaspring.dominio.services;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.agendaspring.dominio.dtos.CadastroTarefaDTO;
+import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.repositories.ITarefaRepository;
 
@@ -39,5 +42,31 @@ public class TarefaService implements ITarefaService {
     public Boolean existeTarefaComMesmoPrazo(LocalDateTime horario) {
         
         return repositorio.existeTarefaComMesmoPrazo(horario);
+    }
+
+    @Override
+    @Transactional
+    public Boolean marcarTarefaVisualizada(UUID id) {
+        
+        Optional<Tarefa> tarefa = repositorio.findById(id);
+		if (tarefa.isPresent()) {
+			tarefa.get().marcarComoVisualizada(null);
+			return true;
+		}
+		
+		return null;
+    }
+
+    @Override
+    @Transactional
+    public Boolean marcarTarefaNaoVisualizada(UUID id) {
+        
+        Optional<Tarefa> tarefa = repositorio.findById(id);
+		if (tarefa.isPresent()) {
+			tarefa.get().marcarComoNaoVisualizada(null);
+			return true;
+		}
+		
+		return null;
     }
 }

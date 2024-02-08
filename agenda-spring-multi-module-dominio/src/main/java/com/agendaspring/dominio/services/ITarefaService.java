@@ -1,6 +1,7 @@
 package com.agendaspring.dominio.services;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,8 @@ public interface ITarefaService {
     Tarefa cadastrarTarefa(CadastroTarefaDTO tarefa);
 
     Boolean existeTarefaComMesmoPrazo(LocalDateTime horario);
+
+    Boolean marcarTarefaVisualizada(UUID id);
+
+    Boolean marcarTarefaNaoVisualizada(UUID id);
 }
