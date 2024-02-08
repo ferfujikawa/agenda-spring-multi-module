@@ -113,7 +113,7 @@ public class TarefaController {
 	@GetMapping("{id}/registrar-anotacao")
 	public String exibirFormularioRegistrarAnotacao(
 			final Model model,
-			@PathVariable Long id,
+			@PathVariable UUID id,
 			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		model.addAttribute("tarefaId", id);
