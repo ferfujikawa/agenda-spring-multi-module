@@ -1,11 +1,17 @@
 package com.agendaspring.dominio.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 
@@ -35,6 +41,9 @@ public class Tarefa {
     @Embedded
     private PrazoTarefa prazo;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarefa", fetch = FetchType.LAZY)
+	private List<HistoricoTarefa> historicos = new ArrayList<HistoricoTarefa>();
+
     protected Tarefa() {}
 
     public Tarefa(String titulo, LocalDateTime prazo, String anotacao) {
@@ -45,6 +54,8 @@ public class Tarefa {
 		this.visualizada = false;
 		dataCadastro = LocalDateTime.now();
 		situacao = new SituacaoTarefa();
+
+        historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa criada"));
 	}
 
     public UUID getId() {
@@ -73,6 +84,7 @@ public class Tarefa {
 
     public Boolean marcarComoVisualizada(String anotacao) {
 		if (this.podeMarcarComoVisualizada()) {
+            historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa marcada como visualizada"));
 			visualizada = true;
 			return true;
 		}
@@ -82,6 +94,7 @@ public class Tarefa {
 
 	public Boolean marcarComoNaoVisualizada(String anotacao) {
 		if (this.podeMarcarComoNaoVisuazalida()) {
+            historicos.add(new HistoricoTarefa(this, anotacao, "Tarefa marcada como não visualizada"));
 			visualizada = false;
 			return true;
 		}
