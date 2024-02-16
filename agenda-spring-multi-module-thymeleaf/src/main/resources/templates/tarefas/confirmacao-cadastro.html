@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::title}, ~{::section})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Tarefa cadastrada</title>
+</head>
+
+<body>
+
+<section>
+
+	<div class="card">
+		<div class="card-header">
+            <h3 class="card-title">Tarefa cadastrada</h3>
+	  	</div>
+		<div class="card-body">
+			<div class="row mb-3">
+				<span class="fw-bold col-sm-2">Id</span>
+				<span class="col-sm-10" th:text="${tarefa.id}"></span>
+			</div>		
+		
+			<div class="row mb-3">
+				<span class="fw-bold col-sm-2">Título</span>
+				<span class="col-sm-10" th:text="${tarefa.titulo}"></span>
+			</div>
+			
+			<div class="row mb-3">
+				<span class="fw-bold col-sm-2">Situação</span>
+				<span class="col-sm-10" th:text="${tarefa.situacao}"></span>
+			</div>
+			
+			<div class="row mb-3">
+				<span class="fw-bold col-sm-2">Prazo</span>
+				<span class="col-sm-10" th:text="${#temporals.format(tarefa.prazo, 'dd/MM/yyyy HH:00')}"></span>
+			</div>
+		</div>
+		<div class="card-footer">
+			<strong>O que você pode fazer:</strong>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item"><a th:href="@{/tarefas}">Retornar à lista de tarefas</a></li>
+			</ul>
+		</div>
+	</div>
+</section>
+
+</body>
+
+</html>
