@@ -55,5 +55,7 @@
 		<module>agenda-spring-multi-module-dominio</module>
 		<module>agenda-spring-multi-module-infra</module>
 		<module>agenda-spring-multi-module-web</module>
+		<module>agenda-spring-multi-module-api</module>
+		<module>agenda-spring-multi-module-thymeleaf</module>
 	</modules>
 </project>
