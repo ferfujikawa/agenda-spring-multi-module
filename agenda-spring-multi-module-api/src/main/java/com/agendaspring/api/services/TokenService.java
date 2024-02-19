@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.agendaspring.dominio.entities.Usuario;
@@ -14,11 +15,17 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 @Service
 public class TokenService implements ITokenService {
 
+    private String secret;
+
+    public TokenService(@Value("${api.security.token.secret}") String secret) {
+        this.secret = secret;
+    }
+
     @Override
     public String gerarToken(Usuario usuario) {
         
         try {
-            Algorithm algoritmo = Algorithm.HMAC256("12345678");
+            Algorithm algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
                 .withIssuer("Agenda Spring API")
                 .withSubject(usuario.getLogin())
