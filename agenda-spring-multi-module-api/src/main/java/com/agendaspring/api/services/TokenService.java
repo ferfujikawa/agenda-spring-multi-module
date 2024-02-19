@@ -16,6 +16,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 @Service
 public class TokenService implements ITokenService {
 
+    private static final String ISSUER = "Agenda Spring API";
     private String secret;
 
     public TokenService(@Value("${api.security.token.secret}") String secret) {
@@ -28,7 +29,7 @@ public class TokenService implements ITokenService {
         try {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
-                .withIssuer("Agenda Spring API")
+                .withIssuer(ISSUER)
                 .withSubject(usuario.getLogin())
                 .withExpiresAt(obterDataExpiracao())
                 .sign(algoritmo);
@@ -49,7 +50,7 @@ public class TokenService implements ITokenService {
             Algorithm algoritmo = Algorithm.HMAC256(secret);
 
             return JWT.require(algoritmo)
-                .withIssuer("Agenda Spring API")
+                .withIssuer(ISSUER)
                 .build()
                 .verify(token)
                 .getSubject();
