@@ -21,10 +21,16 @@ public class AutenticacaoService implements IAutenticacaoService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         
-        Usuario usuarioEncontrado = usuarioRepository.findByLogin(username);
+        Usuario usuarioEncontrado = obterUsuarioPeloLogin(login);
         return new User(usuarioEncontrado.getLogin(), usuarioEncontrado.getSenha(), Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+    }
+
+    @Override
+    public Usuario obterUsuarioPeloLogin(String login) {
+        
+        return usuarioRepository.findByLogin(login);
     }
 
 }
