@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.agendaspring.api.services.IAutenticacaoService;
 import com.agendaspring.api.services.ITokenService;
 import com.agendaspring.dominio.dtos.EfetuarLoginDTO;
 import com.agendaspring.dominio.dtos.TokenDTO;
 import com.agendaspring.dominio.entities.Usuario;
+import com.agendaspring.dominio.repositories.IUsuarioRepository;
 
 @Controller
 @RequestMapping("login")
@@ -24,16 +24,16 @@ public class AutenticacaoController {
 
     private AuthenticationManager manager;
     private ITokenService tokenService;
-    private IAutenticacaoService autenticacaoService;
+    private IUsuarioRepository usuarioRepository;
 
     public AutenticacaoController(
         AuthenticationManager manager,
         ITokenService tokenService,
-        IAutenticacaoService autenticacaoService) {
+        IUsuarioRepository usuarioRepository) {
 
         this.manager = manager;
         this.tokenService = tokenService;
-        this.autenticacaoService = autenticacaoService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @PostMapping
@@ -42,7 +42,7 @@ public class AutenticacaoController {
         Authentication token = new UsernamePasswordAuthenticationToken(efetuarLoginDTO.getLogin(), efetuarLoginDTO.getSenha());
         Authentication authenticate = manager.authenticate(token);
 
-        Usuario usuarioLogado = autenticacaoService.obterUsuarioPeloLogin(((UserDetails) authenticate.getPrincipal()).getUsername());
+        Usuario usuarioLogado = usuarioRepository.findByLogin(((UserDetails) authenticate.getPrincipal()).getUsername());
 
         String tokenJWT = tokenService.gerarToken(usuarioLogado);
 
