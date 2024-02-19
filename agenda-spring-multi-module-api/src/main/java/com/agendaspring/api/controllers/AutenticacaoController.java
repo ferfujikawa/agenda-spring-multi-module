@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.agendaspring.api.services.IAutenticacaoService;
 import com.agendaspring.api.services.ITokenService;
 import com.agendaspring.dominio.dtos.EfetuarLoginDTO;
+import com.agendaspring.dominio.dtos.TokenDTO;
 import com.agendaspring.dominio.entities.Usuario;
 
 @Controller
@@ -36,12 +37,15 @@ public class AutenticacaoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> efetuarLogin(@RequestBody @Valid EfetuarLoginDTO efetuarLoginDTO) {
+    public ResponseEntity<TokenDTO> efetuarLogin(@RequestBody @Valid EfetuarLoginDTO efetuarLoginDTO) {
 
         Authentication token = new UsernamePasswordAuthenticationToken(efetuarLoginDTO.getLogin(), efetuarLoginDTO.getSenha());
         Authentication authenticate = manager.authenticate(token);
 
         Usuario usuarioLogado = autenticacaoService.obterUsuarioPeloLogin(((UserDetails) authenticate.getPrincipal()).getUsername());
-        return ResponseEntity.ok(tokenService.gerarToken(usuarioLogado));
+
+        String tokenJWT = tokenService.gerarToken(usuarioLogado);
+
+        return ResponseEntity.ok(new TokenDTO(tokenJWT));
     }
 }
