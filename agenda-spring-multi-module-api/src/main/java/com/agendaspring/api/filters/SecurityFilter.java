@@ -10,8 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.agendaspring.api.services.ITokenService;
+
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
+
+    private ITokenService tokenService;
+
+    public SecurityFilter(ITokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -19,6 +27,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         
         String token = recuperarToken(request);
 
+        String subject = tokenService.getSubject(token);
+
+        System.out.println(subject);
 
         filterChain.doFilter(request, response);
     }
