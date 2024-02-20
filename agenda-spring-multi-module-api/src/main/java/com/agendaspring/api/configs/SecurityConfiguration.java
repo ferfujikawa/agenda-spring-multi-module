@@ -34,6 +34,8 @@ public class SecurityConfiguration {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(requests ->
                     requests
+                        .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/login").permitAll()
                         .anyRequest().authenticated()
                 )
