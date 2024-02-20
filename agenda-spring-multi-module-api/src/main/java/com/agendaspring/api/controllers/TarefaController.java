@@ -22,8 +22,11 @@ import com.agendaspring.dominio.dtos.TarefaDTO;
 import com.agendaspring.dominio.entities.Tarefa;
 import com.agendaspring.dominio.services.ITarefaService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("tarefas")
+@SecurityRequirement(name = "bearer-key")
 public class TarefaController {
 
     private ITarefaService tarefaService;
