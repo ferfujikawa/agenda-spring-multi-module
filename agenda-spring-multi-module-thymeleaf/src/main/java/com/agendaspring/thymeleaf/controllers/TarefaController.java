@@ -1,5 +1,7 @@
 package com.agendaspring.thymeleaf.controllers;
 
+import java.util.UUID;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -9,11 +11,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
+import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
+import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
 import com.agendaspring.thymeleaf.dtos.TarefaDTO;
 import com.agendaspring.thymeleaf.services.ITarefaApiService;
 
@@ -50,6 +56,20 @@ public class TarefaController extends BaseController {
 		}
 
 		return "tarefas/confirmacao-cadastro";
+	}
+
+	@GetMapping("{id}/historico")
+	public String exibirHistorico(
+		final Model model,
+		@PathVariable UUID id,
+		@RequestParam(name = "pagina", defaultValue = "1") int pagina,
+        @RequestParam(name = "tamanhoPagina", defaultValue = "10") int tamanhoPagina) {
+		
+		ListaPaginadaDTO<HistoricoTarefaDTO> historicos = tarefaApiService.listarHistoricoDeTarefa(id, pagina, tamanhoPagina);
+		model.addAttribute("tarefaId", id);
+		model.addAttribute("historicos", historicos);
+		
+		return "tarefas/historico";
 	}
 
   	@PostMapping
