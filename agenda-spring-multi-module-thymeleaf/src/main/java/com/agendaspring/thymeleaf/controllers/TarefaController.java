@@ -1,5 +1,7 @@
 package com.agendaspring.thymeleaf.controllers;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.agendaspring.thymeleaf.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
@@ -104,6 +107,20 @@ public class TarefaController extends BaseController {
 		model.addAttribute("tarefaId", id);
 		
 		return "tarefas/concluir";
+	}
+
+	@GetMapping("{id}/alterar-prazo")
+	public String exibirFormularioAlterarPrazo(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("tarefa") AlteracaoPrazoTarefaDTO tarefa) {
+
+		LocalDateTime prazoMinimo = LocalDateTime.now().truncatedTo(ChronoUnit.HOURS).plusHours(1);
+
+		model.addAttribute("tarefaId", id);
+		model.addAttribute("prazoMinimo", prazoMinimo);
+
+		return "tarefas/alterar-prazo";
 	}
 
   	@PostMapping
