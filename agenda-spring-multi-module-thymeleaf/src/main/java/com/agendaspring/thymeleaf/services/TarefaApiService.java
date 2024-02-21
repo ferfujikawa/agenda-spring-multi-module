@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.agendaspring.thymeleaf.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
+import com.agendaspring.thymeleaf.dtos.DataTableDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
 import com.agendaspring.thymeleaf.dtos.RegistrarAnotacaoTarefaDTO;
@@ -29,6 +30,25 @@ public class TarefaApiService implements ITarefaApiService {
 
         this.apiUrl = apiUrl;
         this.restTemplate = new RestTemplate();
+    }
+
+    @Override
+    public DataTableDTO<TarefaDTO> listarTarefas(int draw, int inicioPagina, int tamanhoPagina) {
+        
+        ResponseEntity<DataTableDTO<TarefaDTO>> response = restTemplate.exchange(
+            apiUrl + "/tarefas?draw={draw}&inicioPagina={inicioPagina}&tamanhoPagina={tamanhoPagina}",
+            HttpMethod.GET,
+            null,
+            new ParameterizedTypeReference<DataTableDTO<TarefaDTO>>() {},
+            draw,
+            inicioPagina,
+            tamanhoPagina);
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody();
+        }
+
+        return null;
     }
 
     @Override
