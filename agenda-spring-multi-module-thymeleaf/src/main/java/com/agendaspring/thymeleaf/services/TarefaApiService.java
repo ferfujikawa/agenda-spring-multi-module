@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
+import com.agendaspring.thymeleaf.dtos.RegistrarAnotacaoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.TarefaDTO;
 
 @Service
@@ -57,6 +58,20 @@ public class TarefaApiService implements ITarefaApiService {
         }
 
         return null;
+    }
+
+    @Override
+    public Boolean registrarAnotacao(
+        UUID tarefaId,
+        RegistrarAnotacaoTarefaDTO registroAnotacao) {
+        
+        ResponseEntity<String> response = restTemplate.postForEntity(
+            apiUrl + "/tarefas/{tarefaId}/registrar-anotacao",
+            registroAnotacao,
+            String.class,
+            tarefaId);
+
+        return response.getStatusCode().is2xxSuccessful();
     }
 
 }
