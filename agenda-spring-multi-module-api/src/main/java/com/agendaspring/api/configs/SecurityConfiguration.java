@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.agendaspring.api.filters.SecurityFilter;
-import com.agendaspring.api.services.IAutenticacaoService;
 
 @Configuration
 @EnableWebSecurity
