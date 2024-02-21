@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.agendaspring.thymeleaf.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
+import com.agendaspring.thymeleaf.dtos.DataTableDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
 import com.agendaspring.thymeleaf.dtos.RegistrarAnotacaoTarefaDTO;
@@ -38,7 +40,7 @@ public class TarefaController extends BaseController {
 		this.tarefaApiService = tarefaApiService;
 	}
 
-	@GetMapping
+	@GetMapping(produces = "text/html")
 	public String exibirPaginaListaTarefas(Model model) {
 	
 		model.addAttribute("apiUrl", this.getApiUrl());
@@ -46,10 +48,19 @@ public class TarefaController extends BaseController {
 		return "tarefas/index";
 	}
 
+	@GetMapping(produces = "application/json")
+	public @ResponseBody DataTableDTO<TarefaDTO> listarTarefas(
+		@RequestParam("draw") int draw,
+		@RequestParam("start") int inicioPagina,
+		@RequestParam("length") int tamanhoPagina) {
+		
+		return tarefaApiService.listarTarefas(draw, inicioPagina, tamanhoPagina);
+	}
+
   	@GetMapping("nova")
 	public String exibirFormularioCadastroTarefa(@ModelAttribute("tarefa") CadastroTarefaDTO tarefa) {
 		
-    return "tarefas/nova";
+    	return "tarefas/nova";
 	}
 
   	@GetMapping("confirmacao-cadastro")

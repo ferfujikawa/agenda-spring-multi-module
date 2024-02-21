@@ -98,11 +98,6 @@
 	<th:block th:replace="~{fragmentos/arquivosDatatables :: rodape}" />
 	
 	<script th:inline="javascript">
-		/*<![CDATA[*/
-	
-		var apiUrl = /*[[${apiUrl}]]*/ 'http://localhost:8081';
-	
-		/*]]>*/
 	
 		const modalMarcarComoVisualizada = $('#modalMarcarComoVisualizada');
 		if (modalMarcarComoVisualizada) {
@@ -144,7 +139,7 @@
 			        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
 			    },
 				ajax: {
-					url: apiUrl + '/tarefas',
+					url: '/tarefas',
 					type: 'GET',
 					contentType: 'application/json' 
 				},
