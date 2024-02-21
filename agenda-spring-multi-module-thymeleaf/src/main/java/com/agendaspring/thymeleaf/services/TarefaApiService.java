@@ -7,7 +7,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
@@ -29,13 +29,15 @@ public class TarefaApiService implements ITarefaApiService {
     }
 
     @Override
-    public ResponseEntity<?> cadastrarTarefa(CadastroTarefaDTO cadastroTarefaDTO) {
+    public TarefaDTO cadastrarTarefa(CadastroTarefaDTO cadastroTarefaDTO) throws BadRequest {
   
-        try {
-            return restTemplate.postForEntity(apiUrl + "/tarefas", cadastroTarefaDTO, TarefaDTO.class);
-        } catch (HttpClientErrorException ex) {
-            return ResponseEntity.badRequest().body(ex);
+        ResponseEntity<TarefaDTO> response = restTemplate.postForEntity(apiUrl + "/tarefas", cadastroTarefaDTO, TarefaDTO.class);
+        
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody();
         }
+
+        return null;
     }
 
     @Override
