@@ -25,7 +25,7 @@ import com.agendaspring.dominio.services.ITarefaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
-@RequestMapping("tarefas")
+@RequestMapping(path = "tarefas", produces = "application/json")
 @SecurityRequirement(name = "bearer-key")
 public class TarefaController {
 
