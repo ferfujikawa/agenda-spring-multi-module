@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
+import com.agendaspring.thymeleaf.dtos.RegistrarAnotacaoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.TarefaDTO;
 import com.agendaspring.thymeleaf.services.ITarefaApiService;
 
@@ -71,6 +72,17 @@ public class TarefaController extends BaseController {
 		return "tarefas/historico";
 	}
 
+	@GetMapping("{id}/registrar-anotacao")
+	public String exibirFormularioRegistrarAnotacao(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		model.addAttribute("tarefaId", id);
+		
+		return "tarefas/registrar-anotacao";
+	}
+
   	@PostMapping
 	public String cadastrarTarefa(
 		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
@@ -91,5 +103,15 @@ public class TarefaController extends BaseController {
 			result.rejectValue("prazo", "tarefa", "Erro ao cadastrar tarefa");
 			return exibirFormularioCadastroTarefa(tarefa);
 		}
+	}
+
+	@PostMapping("{id}/registrar-anotacao")
+	public String registrarAnotacao(
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") @Valid RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		tarefaApiService.registrarAnotacao(id, registroAnotacao);
+		
+		return "redirect:/tarefas";
 	}
 }
