@@ -165,18 +165,18 @@
                     	render: (data, type, row, meta) => {
                     		let retorno = '<div class="btn-group">';
 
-							retorno += '<a href="http://localhost:8081/tarefas/' + data + '/historico" ' +
+							retorno += '<a href="/tarefas/' + data + '/historico" ' +
 								'class="btn btn-secondary fa fa-history" ' +
 								'title="Visualizar histórico">' + 
 								'</a>';
 
-							retorno += '<a href="http://localhost:8081/tarefas/' + data + '/registrar-anotacao" ' +
+							retorno += '<a href="/tarefas/' + data + '/registrar-anotacao" ' +
                        			'class="btn btn-success fa fa-sticky-note" ' +
                        			'title="Registrar anotação">' +
                         		'</a>';
 
 							if (row.podeDarAndamento) {
-                       			retorno += '<a href="http://localhost:8081/tarefas/' + data + '/dar-andamento" ' +
+                       			retorno += '<a href="/tarefas/' + data + '/dar-andamento" ' +
                            			'class="btn btn-primary fa fa-step-forward" ' +
                            			'title="Dar andamento">' +
                         			'</a>';
@@ -210,14 +210,14 @@
                        		}
 
 							if (row.podeCancelar) {
-                       			retorno += '<a href="http://localhost:8081/tarefas/' + data + '/cancelar" ' +
+                       			retorno += '<a href="/tarefas/' + data + '/cancelar" ' +
                            			'class="btn btn-danger fa fa-times-circle" ' +
                            			'title="Cancelar">' +
                             		'</a>';
                        		}
 
 							if (row.podeAlterarPrazo) {
-                       			retorno += '<a href="http://localhost:8081/tarefas/' + data + '/alterar-prazo" ' +
+                       			retorno += '<a href="/tarefas/' + data + '/alterar-prazo" ' +
 									'class="btn btn-primary fa fa-clock" ' +
 									'title="Alterar prazo"> ' +
 									'</a>';
