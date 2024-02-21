@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
@@ -72,6 +73,21 @@ public class TarefaApiService implements ITarefaApiService {
             tarefaId);
 
         return response.getStatusCode().is2xxSuccessful();
+    }
+
+    @Override
+    public Boolean cancelar(UUID tarefaId, RegistrarAnotacaoTarefaDTO registroAnotacao) {
+        
+        try {
+            restTemplate.put(
+                apiUrl + "/tarefas/{tarefaId}/cancelar",
+                registroAnotacao,
+                tarefaId);
+
+            return true;
+        } catch (RestClientException ex) {
+            return false;
+        }
     }
 
 }

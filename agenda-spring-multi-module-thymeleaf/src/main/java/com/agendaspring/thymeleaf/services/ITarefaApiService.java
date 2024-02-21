@@ -17,4 +17,6 @@ public interface ITarefaApiService {
     ListaPaginadaDTO<HistoricoTarefaDTO> listarHistoricoDeTarefa(UUID tarefaId, int pagina, int tamanhoPagina);
 
     Boolean registrarAnotacao(UUID tarefaId, RegistrarAnotacaoTarefaDTO registroAnotacao);
+
+    Boolean cancelar(UUID tarefaId, RegistrarAnotacaoTarefaDTO registroAnotacao);
 }
