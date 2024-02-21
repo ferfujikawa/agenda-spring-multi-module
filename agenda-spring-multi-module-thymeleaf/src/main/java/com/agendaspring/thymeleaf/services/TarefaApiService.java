@@ -90,4 +90,34 @@ public class TarefaApiService implements ITarefaApiService {
         }
     }
 
+    @Override
+    public Boolean marcarTarefaVisualizada(UUID tarefaId) {
+        
+        try {
+            restTemplate.put(
+                apiUrl + "/tarefas/{tarefaId}/marcar-visualizada",
+                null,
+                tarefaId);
+
+            return true;
+        } catch (RestClientException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean marcarTarefaNaoVisualizada(UUID tarefaId) {
+        
+        try {
+            restTemplate.put(
+                apiUrl + "/tarefas/{tarefaId}/marcar-nao-visualizada",
+                null,
+                tarefaId);
+
+            return true;
+        } catch (RestClientException ex) {
+            return false;
+        }
+    }
+
 }
