@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html th:replace="~{base::layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Alterar prazo da Tarefa</title>
+</head>
+<body>
+<section>
+	<div class="card">
+		<div class="card-header">
+            <h3 class="card-title">Novo prazo da Tarefa</h3>
+	  	</div>
+		<div class="card-body">
+		
+		    <form th:action="@{/tarefas/{id}/alterar-prazo(id=${tarefaId})}" th:object="${tarefa}" th:method="put">
+		        <fieldset>
+		            
+		            <div class="mb-3">
+		                <label for="prazo" class="form-label">Prazo</label>
+		                
+		                <div class="row g-2">
+							<input
+								type="datetime-local"
+								hidden="true"
+								th:field="*{prazo}"
+								class="form-control"
+								id="prazo"
+								step="3600">
+
+							<div class="col-auto">
+								<input
+									type="date"
+									class="form-control"
+									id="prazoData"
+									required>
+							</div>
+
+							<div class="col-auto">
+								<select id="prazoHora" class="form-control">
+									<option th:each="hora : ${#numbers.sequence(0, 24)}" th:value="${#numbers.formatInteger(hora, 2)} + ':00'" th:text="${#numbers.formatInteger(hora, 2)} + ':00'"></option>
+								</select>
+							</div>
+							
+							<span th:if="${#fields.hasErrors('prazo')}" th:errors="*{prazo}" class="text-danger"></span>
+						</div>
+		            </div>
+		            
+		            <div class="mb-3">
+		                <label for="prazo" class="form-label">Anotação</label>
+			                <textarea
+			                    th:field="*{anotacao}"
+			                    class="form-control"
+			                    rows="5"
+			                    placeholder="Escreva uma anotação para a alteração a ser realizada"
+			                    id="anotacao">
+							</textarea>
+		            </div>
+		            
+		            <div class="mb-3">
+		                <input class="btn btn-primary" type="submit" value="Salvar" />
+						<a class="btn btn-danger" th:href="@{/tarefas}">Cancelar</a>
+		            </div>
+		        </fieldset>
+		    </form>
+	    </div>
+    </div>
+    
+    <script>
+		atribuirPrazo = () => {
+			var prazoData = $('#prazoData').val();
+			if (prazoData) {
+				var prazoHora = $('#prazoHora').val();
+
+				$('#prazo').val(prazoData + 'T' + prazoHora);
+			}
+		}
+
+		carregarPrazo = () => {
+			var prazo = $('#prazo').val();
+			if (prazo) {
+				$('#prazoData').val(prazo.split('T')[0]);
+				$('#prazoHora').val(prazo.split('T')[1]);
+			}
+		}
+
+		$(document).ready(() => {
+			carregarPrazo();
+
+			$('#prazoData').change(atribuirPrazo);
+			$('#prazoHora').change(atribuirPrazo);
+		});
+	</script>
+</section>
+</body>
+</html>
