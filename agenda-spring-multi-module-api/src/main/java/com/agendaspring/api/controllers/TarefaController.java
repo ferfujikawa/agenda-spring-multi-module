@@ -85,7 +85,7 @@ public class TarefaController {
 	@PostMapping("{id}/registrar-anotacao")
 	public ResponseEntity<String> registrarAnotacao(
 			@PathVariable UUID id,
-			@Valid @ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.registrarAnotacao(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Anotação registrada");
@@ -117,7 +117,7 @@ public class TarefaController {
 	@PutMapping("{id}/dar-andamento")
 	public ResponseEntity<String> darAndamento(
 			@PathVariable UUID id,
-			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.darAndamento(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Andamento de tarefa registrado");
@@ -129,7 +129,7 @@ public class TarefaController {
 	@PutMapping("{id}/cancelar")
 	public ResponseEntity<String> cancelar(
 			@PathVariable UUID id,
-			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.cancelar(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Tarefa cancelada");
@@ -141,7 +141,7 @@ public class TarefaController {
 	@PutMapping("{id}/concluir")
 	public ResponseEntity<String> concluir(
 			@PathVariable UUID id,
-			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.concluir(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Tarefa concluída");
