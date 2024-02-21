@@ -83,6 +83,17 @@ public class TarefaController extends BaseController {
 		return "tarefas/registrar-anotacao";
 	}
 
+	@GetMapping("{id}/cancelar")
+	public String exibirFormularioCancelar(
+			final Model model,
+			@PathVariable UUID id,
+			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		model.addAttribute("tarefaId", id);
+		
+		return "tarefas/cancelar";
+	}
+
   	@PostMapping
 	public String cadastrarTarefa(
 		@ModelAttribute("tarefa") @Valid CadastroTarefaDTO tarefa,
