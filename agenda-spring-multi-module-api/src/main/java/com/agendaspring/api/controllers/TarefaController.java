@@ -46,8 +46,8 @@ public class TarefaController {
     @GetMapping
 	public ResponseEntity<DataTableDTO<TarefaDTO>> listarTarefas(
 			@RequestParam(name = "draw", defaultValue = "1") int draw,
-			@RequestParam(name = "start", defaultValue = "1") int inicioPagina,
-            @RequestParam(name = "length", defaultValue = "10") int tamanhoPagina) {
+			@RequestParam(name = "inicioPagina", defaultValue = "1") int inicioPagina,
+            @RequestParam(name = "tamanhoPagina", defaultValue = "10") int tamanhoPagina) {
 		
 		int numeroPagina = inicioPagina / tamanhoPagina;
 		Pageable pageable = PageRequest.of(numeroPagina, tamanhoPagina, Sort.by(Sort.Direction.ASC, "prazo.valor"));
