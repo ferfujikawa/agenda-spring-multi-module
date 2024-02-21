@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import com.agendaspring.thymeleaf.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
@@ -25,4 +26,6 @@ public interface ITarefaApiService {
     Boolean marcarTarefaNaoVisualizada(UUID tarefaId);
 
     Boolean concluir(UUID tarefaId, RegistrarAnotacaoTarefaDTO registroAnotacao);
+
+    Boolean alterarPrazoTarefa(UUID tarefaId, AlteracaoPrazoTarefaDTO tarefa);
 }

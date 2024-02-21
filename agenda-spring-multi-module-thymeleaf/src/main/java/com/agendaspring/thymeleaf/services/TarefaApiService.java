@@ -11,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.agendaspring.thymeleaf.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.HistoricoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.ListaPaginadaDTO;
@@ -127,6 +128,21 @@ public class TarefaApiService implements ITarefaApiService {
             restTemplate.put(
                 apiUrl + "/tarefas/{tarefaId}/concluir",
                 registroAnotacao,
+                tarefaId);
+
+            return true;
+        } catch (RestClientException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean alterarPrazoTarefa(UUID tarefaId, AlteracaoPrazoTarefaDTO tarefa) {
+        
+        try {
+            restTemplate.put(
+                apiUrl + "/tarefas/{tarefaId}/alterar-prazo",
+                tarefa,
                 tarefaId);
 
             return true;
