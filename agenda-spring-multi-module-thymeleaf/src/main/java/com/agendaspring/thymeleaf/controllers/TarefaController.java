@@ -146,8 +146,8 @@ public class TarefaController extends BaseController {
 
 	@PostMapping("{id}/registrar-anotacao")
 	public String registrarAnotacao(
-			@PathVariable UUID id,
-			@ModelAttribute("registroAnotacao") @Valid RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		@PathVariable UUID id,
+		@ModelAttribute("registroAnotacao") @Valid RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		tarefaApiService.registrarAnotacao(id, registroAnotacao);
 		
@@ -156,10 +156,20 @@ public class TarefaController extends BaseController {
 
 	@PutMapping("{id}/cancelar")
 	public String cancelar(
-			@PathVariable UUID id,
-			@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		@PathVariable UUID id,
+		@ModelAttribute("registroAnotacao") @Valid RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		tarefaApiService.cancelar(id, registroAnotacao);
+		
+		return "redirect:/tarefas";
+	}
+
+	@PutMapping("{id}/concluir")
+	public String concluir(
+		@PathVariable UUID id,
+		@ModelAttribute("registroAnotacao") RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		
+		tarefaApiService.concluir(id, registroAnotacao);
 		
 		return "redirect:/tarefas";
 	}
