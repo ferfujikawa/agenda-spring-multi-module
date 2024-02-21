@@ -108,7 +108,7 @@
 		if (modalMarcarComoVisualizada) {
 			$(modalMarcarComoVisualizada).on('show.bs.modal', event => {
 				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
-				const url = apiUrl + '/tarefas/' + tarefaId + '/marcar-visualizada';
+				const url = '/tarefas/' + tarefaId + '/marcar-visualizada';
 				$('#formMarcarVisualizada').attr('action', url);
 			});
 		}
@@ -117,7 +117,7 @@
 		if (modalMarcarComoNaoVisualizada) {
 			$(modalMarcarComoNaoVisualizada).on('show.bs.modal', event => {
 				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
-				const url = apiUrl + '/tarefas/' + tarefaId + '/marcar-nao-visualizada';
+				const url = '/tarefas/' + tarefaId + '/marcar-nao-visualizada';
 				$('#formMarcarNaoVisualizada').attr('action', url);
 			});
 		}
@@ -126,7 +126,7 @@
 		if (modalConcluir) {
 			$(modalConcluir).on('show.bs.modal', event => {
 				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
-				const url = apiUrl + '/tarefas/' + tarefaId + '/concluir';
+				const url = '/tarefas/' + tarefaId + '/concluir';
 				$('#formConcluir').attr('action', url);
 				$('#lnkConcluirComAnotacao').attr('href', url);
 			});
