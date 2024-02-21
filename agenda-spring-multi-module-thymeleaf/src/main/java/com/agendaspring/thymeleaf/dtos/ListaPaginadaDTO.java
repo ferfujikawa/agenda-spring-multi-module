@@ -39,4 +39,28 @@ public class ListaPaginadaDTO<T> {
 	public List<T> getRegistros() {
 		return registros;
 	}
+
+	public void setPagina(Integer pagina) {
+		this.pagina = pagina;
+	}
+
+	public void setTamanhoPagina(Integer tamanhoPagina) {
+		this.tamanhoPagina = tamanhoPagina;
+	}
+
+	public void setTotalPaginas(Integer totalPaginas) {
+		this.totalPaginas = totalPaginas;
+	}
+
+	public void setTotalRegistros(Long totalRegistros) {
+		this.totalRegistros = totalRegistros;
+	}
+
+	public void setTotalPaginaAtual(Integer totalPaginaAtual) {
+		this.totalPaginaAtual = totalPaginaAtual;
+	}
+
+	public void setRegistros(List<T> registros) {
+		this.registros = registros;
+	}
 }
