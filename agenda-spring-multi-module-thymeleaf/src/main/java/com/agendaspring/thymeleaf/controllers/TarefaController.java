@@ -117,6 +117,22 @@ public class TarefaController extends BaseController {
 		}
 	}
 
+	@PutMapping("{id}/marcar-visualizada")
+	public String marcarVisualizada(@PathVariable UUID id) {
+		
+		tarefaApiService.marcarTarefaVisualizada(id);
+		
+		return "redirect:/tarefas";
+	}
+	
+	@PutMapping("{id}/marcar-nao-visualizada")
+	public String marcarNaoVisualizada(@PathVariable UUID id) {
+		
+		tarefaApiService.marcarTarefaNaoVisualizada(id);
+		
+		return "redirect:/tarefas";
+	}
+
 	@PostMapping("{id}/registrar-anotacao")
 	public String registrarAnotacao(
 			@PathVariable UUID id,
