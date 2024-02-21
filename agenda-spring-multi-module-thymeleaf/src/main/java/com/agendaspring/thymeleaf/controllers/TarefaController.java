@@ -190,4 +190,20 @@ public class TarefaController extends BaseController {
 		
 		return "redirect:/tarefas";
 	}
+
+	@PutMapping("{id}/alterar-prazo")
+	public String alterarPrazo(
+			final Model model,
+			@ModelAttribute("tarefa") @Valid AlteracaoPrazoTarefaDTO tarefa,
+			BindingResult result,
+			@PathVariable UUID id) {
+		
+		if (result.hasErrors()) {
+			return exibirFormularioAlterarPrazo(model, id, tarefa);
+		}
+
+		tarefaApiService.alterarPrazoTarefa(id, tarefa);
+
+		return "redirect:/tarefas";
+	}
 }
