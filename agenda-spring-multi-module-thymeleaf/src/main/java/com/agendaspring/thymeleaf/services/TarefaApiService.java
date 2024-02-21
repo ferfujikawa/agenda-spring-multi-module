@@ -120,4 +120,19 @@ public class TarefaApiService implements ITarefaApiService {
         }
     }
 
+    @Override
+    public Boolean concluir(UUID tarefaId, RegistrarAnotacaoTarefaDTO registroAnotacao) {
+        
+        try {
+            restTemplate.put(
+                apiUrl + "/tarefas/{tarefaId}/concluir",
+                registroAnotacao,
+                tarefaId);
+
+            return true;
+        } catch (RestClientException ex) {
+            return false;
+        }
+    }
+
 }

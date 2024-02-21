@@ -23,4 +23,6 @@ public interface ITarefaApiService {
     Boolean marcarTarefaVisualizada(UUID tarefaId);
 
     Boolean marcarTarefaNaoVisualizada(UUID tarefaId);
+
+    Boolean concluir(UUID tarefaId, RegistrarAnotacaoTarefaDTO registroAnotacao);
 }
