@@ -7,10 +7,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.agendaspring.api.services.ITokenService;
 import com.agendaspring.dominio.dtos.EfetuarLoginDTO;
@@ -18,7 +18,7 @@ import com.agendaspring.dominio.dtos.TokenDTO;
 import com.agendaspring.dominio.entities.Usuario;
 import com.agendaspring.dominio.repositories.IUsuarioRepository;
 
-@Controller
+@RestController
 @RequestMapping("login")
 public class AutenticacaoController {
 
