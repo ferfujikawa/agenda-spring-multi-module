@@ -115,8 +115,8 @@ public class TarefaController {
 
 	@PutMapping("{id}/dar-andamento")
 	public ResponseEntity<String> darAndamento(
-			@PathVariable UUID id,
-			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		@PathVariable UUID id,
+		@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.darAndamento(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Andamento de tarefa registrado");
@@ -127,8 +127,8 @@ public class TarefaController {
 
 	@PutMapping("{id}/cancelar")
 	public ResponseEntity<String> cancelar(
-			@PathVariable UUID id,
-			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		@PathVariable UUID id,
+		@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.cancelar(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Tarefa cancelada");
@@ -139,8 +139,8 @@ public class TarefaController {
 
 	@PutMapping("{id}/concluir")
 	public ResponseEntity<String> concluir(
-			@PathVariable UUID id,
-			@Valid @RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
+		@PathVariable UUID id,
+		@RequestBody RegistrarAnotacaoTarefaDTO registroAnotacao) {
 		
 		if (tarefaService.concluir(id, registroAnotacao)) {
 			return ResponseEntity.ok().body("Tarefa concluída");
@@ -151,8 +151,8 @@ public class TarefaController {
 
 	@PutMapping("{id}/alterar-prazo")
 	public ResponseEntity<String> alterarPrazo(
-			@RequestBody @Valid AlteracaoPrazoTarefaDTO tarefa,
-			@PathVariable UUID id) {
+		@RequestBody @Valid AlteracaoPrazoTarefaDTO tarefa,
+		@PathVariable UUID id) {
 		
 		if (tarefaService.alterarPrazoTarefa(id, tarefa)) {
 			return ResponseEntity.ok().body("Prazo de tarefa alterado");
