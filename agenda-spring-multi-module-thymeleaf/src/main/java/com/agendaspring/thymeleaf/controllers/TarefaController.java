@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
@@ -82,16 +81,15 @@ public class TarefaController extends BaseController {
 			return exibirFormularioCadastroTarefa(tarefa);
 		}
 		
-		ResponseEntity<?> resposta = tarefaApiService.cadastrarTarefa(tarefa);
-		
-		if (resposta.getStatusCode() == HttpStatus.BAD_REQUEST) {
+		try {
+			TarefaDTO tarefaCadastrada = tarefaApiService.cadastrarTarefa(tarefa);
 
+			redirectAttributes.addFlashAttribute("tarefa", tarefaCadastrada);
+			return "redirect:/tarefas/confirmacao-cadastro";
+		} catch (BadRequest ex) {
 			//TODO: Implementar captura de dados do HttpClientErrorException
-			result.rejectValue("prazo", "tarefa", "Erro");
+			result.rejectValue("prazo", "tarefa", "Erro ao cadastrar tarefa");
 			return exibirFormularioCadastroTarefa(tarefa);
 		}
-
-		redirectAttributes.addFlashAttribute("tarefa", (TarefaDTO) resposta.getBody());
-		return "redirect:/tarefas/confirmacao-cadastro";
 	}
 }
