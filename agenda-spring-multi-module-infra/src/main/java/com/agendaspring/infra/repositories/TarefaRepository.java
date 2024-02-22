@@ -21,7 +21,7 @@ public interface TarefaRepository extends ITarefaRepository, JpaRepository<Taref
     Page<Tarefa> listarTarefas(Pageable paginacao);
 
     @Override
-    @Query("SELECT CASE WHEN count(t) > 0 THEN true ELSE false END FROM Tarefa t WHERE prazo.valor = :horario")
+    @Query("SELECT CASE WHEN count(t) > 0 THEN true ELSE false END FROM Tarefa t WHERE prazo.valor = :horario AND situacao.valor NOT IN ('Cancelada', 'Concluída')")
     Boolean existeTarefaComMesmoPrazo(LocalDateTime horario);
 
     @Override
