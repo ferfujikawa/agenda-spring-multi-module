@@ -1,0 +1,23 @@
+server:
+    port: 8081
+    error:
+        include-stacktrace: never
+
+spring:
+    datasource:
+        url: jdbc:postgresql://${DB_DATABASE:localhost/agenda_spring_multi_module}
+        username: ${DB_USER:postgres}
+        password: ${DB_PASSWORD:postgres-9}
+        driver-class-name: org.postgresql.Driver
+
+    data:
+        web:
+            pageable:
+                page-parameter: pagina
+                size-parameter: tamanho
+            sort:
+                sort-parameter: ordem
+
+app:
+    security:
+        token-secret: ${JWT_SECRET:12345678}

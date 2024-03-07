@@ -19,7 +19,7 @@ public class TokenService implements ITokenService {
     private static final String ISSUER = "Agenda Spring API";
     private String secret;
 
-    public TokenService(@Value("${api.security.token.secret}") String secret) {
+    public TokenService(@Value("${app.security.token-secret}") String secret) {
         this.secret = secret;
     }
 
