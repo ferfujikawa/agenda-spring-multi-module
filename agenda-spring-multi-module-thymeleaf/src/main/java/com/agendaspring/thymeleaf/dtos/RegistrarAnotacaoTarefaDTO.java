@@ -1,4 +1,4 @@
-package com.agendaspring.dominio.dtos;
+package com.agendaspring.thymeleaf.dtos;
 
 import javax.validation.constraints.NotBlank;
 

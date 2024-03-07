@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html th:replace="~{base::layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Lista de tarefas</title>
+	
+	<th:block th:replace="~{fragmentos/arquivosDatatables :: cabecalho}" />
+</head>
+<body>
+<section>
+	<div class="card">
+		<div class="card-header">
+			<div class="row">
+                <div class="col col-xs-6">
+                    <h3 class="card-title">Tarefas cadastradas</h3>
+                </div>
+				<div class="col col-xs-6 text-end">
+                    <a class="btn btn-success" th:href="@{tarefas/nova}">Nova</a>
+                </div>
+            </div>
+	  	</div>
+		<div class="card-body">
+			<div class="alert alert-info" role="alert">
+            	A lista está ordenada pela data do prazo 
+            </div>
+            <div class="table-responsive p-3">
+                <table class="table table-striped table-hover align-middle" id="tableTarefas">
+                </table>
+            </div>
+		</div>
+	</div>
+
+	<!-- Modal Marcar Como Visualizada -->
+	<div class="modal fade" id="modalMarcarComoVisualizada" tabindex="-1" aria-labelledby="modalMarcarComoVisualizada" aria-hidden="true">
+		
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="formMarcarVisualizada" th:method="put">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">Marcar tarefa como visualizada</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Confirma a marcação da tarefa como visualizada?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+	</div>
+	
+	<!-- Modal Marcar Como Não Visualizada -->
+	<div class="modal fade" id="modalMarcarComoNaoVisualizada" tabindex="-1" aria-labelledby="modalMarcarComoNaoVisualizada" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="formMarcarNaoVisualizada" th:method="put">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">Marcar tarefa como não visualizada</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Confirma a marcação da tarefa como não visualizada?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Concluir -->
+	<div class="modal fade" id="modalConcluir" tabindex="-1" aria-labelledby="modalConcluir" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<form id="formConcluir" th:method="put">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">Concluir tarefa</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Confirma a conclusão da tarefa?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+						<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sim</button>
+						<a href="" class="btn btn-warning" id="lnkConcluirComAnotacao">Sim, com anotação</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:replace="~{fragmentos/arquivosDatatables :: rodape}" />
+	
+	<script th:inline="javascript">
+	
+		const modalMarcarComoVisualizada = $('#modalMarcarComoVisualizada');
+		if (modalMarcarComoVisualizada) {
+			$(modalMarcarComoVisualizada).on('show.bs.modal', event => {
+				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
+				const url = '/tarefas/' + tarefaId + '/marcar-visualizada';
+				$('#formMarcarVisualizada').attr('action', url);
+			});
+		}
+
+		const modalMarcarComoNaoVisualizada = $('#modalMarcarComoNaoVisualizada');
+		if (modalMarcarComoNaoVisualizada) {
+			$(modalMarcarComoNaoVisualizada).on('show.bs.modal', event => {
+				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
+				const url = '/tarefas/' + tarefaId + '/marcar-nao-visualizada';
+				$('#formMarcarNaoVisualizada').attr('action', url);
+			});
+		}
+
+		const modalConcluir = $('#modalConcluir');
+		if (modalConcluir) {
+			$(modalConcluir).on('show.bs.modal', event => {
+				const tarefaId = event.relatedTarget.getAttribute('data-bs-tarefa-id');
+				const url = '/tarefas/' + tarefaId + '/concluir';
+				$('#formConcluir').attr('action', url);
+				$('#lnkConcluirComAnotacao').attr('href', url);
+			});
+		}
+
+		$(document).ready(() => {
+			new DataTable('#tableTarefas', {
+				serverSide: true,
+                processing: true,
+                searchDelay: 500,
+				pagingType: 'full_numbers',
+				searching: false,
+				ordering: false,
+				language: {
+			        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+			    },
+				ajax: {
+					url: '/tarefas',
+					type: 'GET',
+					contentType: 'application/json' 
+				},
+				columns: [
+					{title: 'Título', data: 'titulo', width: '35%'},
+                    {title: 'Situação', data: 'situacao'},
+                    {title: 'Prazo', data: 'prazo',
+                    	render: (data) => {
+                    		return new Date(data).toLocaleString();
+                    	}
+                   	},
+                    {title: 'Visualizada', data: 'visualizada',
+                    	render: (data) => {
+                    		return (data) ? 'Sim' : 'Não';
+                   		}
+                    },
+					{title: 'Ações', data: 'id', width: '300px',
+                    	render: (data, type, row, meta) => {
+                    		let retorno = '<div class="btn-group">';
+
+							retorno += '<a href="/tarefas/' + data + '/historico" ' +
+								'class="btn btn-secondary fa fa-history" ' +
+								'title="Visualizar histórico">' + 
+								'</a>';
+
+							retorno += '<a href="/tarefas/' + data + '/registrar-anotacao" ' +
+                       			'class="btn btn-success fa fa-sticky-note" ' +
+                       			'title="Registrar anotação">' +
+                        		'</a>';
+
+							if (row.podeDarAndamento) {
+                       			retorno += '<a href="/tarefas/' + data + '/dar-andamento" ' +
+                           			'class="btn btn-primary fa fa-step-forward" ' +
+                           			'title="Dar andamento">' +
+                        			'</a>';
+                       		}
+
+							if (row.podeMarcarComoVisualizada) {
+                       			retorno += '<button class="btn btn-warning fa fa-eye" ' +
+                               		'title="Marcar como visualizada" ' +
+									'data-bs-toggle="modal" ' +
+									'data-bs-target="#modalMarcarComoVisualizada" ' +
+									'data-bs-tarefa-id="' + data + '">' +
+                               		'</button>';
+                       		}
+                       		
+                       		if (row.podeMarcarComoNaoVisualizada) {
+                       			retorno += '<button class="btn btn-warning fa fa-eye-slash" ' +
+                            		'title="Marcar como não visualizada" ' +
+									'data-bs-toggle="modal" ' +
+									'data-bs-target="#modalMarcarComoNaoVisualizada" ' +
+									'data-bs-tarefa-id="' + data + '">' +
+                           			'</button>';
+                       		}
+
+							if (row.podeConcluir) {
+                       			retorno += '<button class="btn btn-success fa fa-check-circle" ' +
+                           			'title="Concluir" ' +
+                           			'data-bs-toggle="modal" ' +
+									'data-bs-target="#modalConcluir" ' +
+									'data-bs-tarefa-id="' + data + '">' +
+                            		'</button>';
+                       		}
+
+							if (row.podeCancelar) {
+                       			retorno += '<a href="/tarefas/' + data + '/cancelar" ' +
+                           			'class="btn btn-danger fa fa-times-circle" ' +
+                           			'title="Cancelar">' +
+                            		'</a>';
+                       		}
+
+							if (row.podeAlterarPrazo) {
+                       			retorno += '<a href="/tarefas/' + data + '/alterar-prazo" ' +
+									'class="btn btn-primary fa fa-clock" ' +
+									'title="Alterar prazo"> ' +
+									'</a>';
+                       		}
+                       		
+                       		retorno += '</div>';
+                        		
+                       		return retorno;
+                    	}
+                    }
+				]
+			});
+		});
+	</script>
+</section>
+</body>
+</html>

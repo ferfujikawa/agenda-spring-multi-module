@@ -17,3 +17,10 @@ CREATE TABLE historicos_tarefa (
 	CONSTRAINT historicos_tarefa_pkey PRIMARY KEY (id),
 	CONSTRAINT historicos_tarefa_tarefa_fk FOREIGN KEY (tarefa_id) REFERENCES tarefas(id)
 );
+
+CREATE TABLE usuarios (
+	id uuid NOT NULL,
+	login varchar(100) NOT NULL,
+	senha varchar(255) NOT NULL,
+	CONSTRAINT usuarios_pkey PRIMARY KEY (id)
+);

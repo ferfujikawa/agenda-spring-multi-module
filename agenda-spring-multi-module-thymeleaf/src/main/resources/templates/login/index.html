@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agenda Spring Thymeleaf - Login</title>
+    <meta charset="UTF-8" />
+    
+    <link th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/webjars/font-awesome/6.5.1/css/all.min.css}" rel="stylesheet" />
+    
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+
+	<section class="vh-100 bg-primary">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+            
+                        <h3 class="mb-3">Autenticação</h3>
+            
+                        <form action="#" th:action="@{/authenticate}" method="POST" class="form-horizontal">
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="Usuário" />
+                            </div>
+                
+                            <div class="form-outline mb-4">
+                                <input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Senha" />
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-15">
+                                    <div>
+                                        <div th:if="${param.error}">
+    
+                                            <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                                                Usuário e senha inválidos.
+                                            </div>
+    
+                                        </div>
+                                        
+                                        <div th:if="${param.logout}">
+    
+                                            <div class="alert alert-success col-xs-offset-1 col-xs-10">
+                                                Você se desconectou.
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                        </form>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+</body>
+</html>

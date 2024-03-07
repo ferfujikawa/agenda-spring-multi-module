@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+	
+	<div class="row" th:fragment="paginacao(listaPaginada, url)">
+       	<div class="col-sm-12 col-md-5">
+       		<div th:text="'Mostrando de ' + ${(listaPaginada.pagina - 1) * listaPaginada.tamanhoPagina + 1} + ' até ' + ${listaPaginada.totalPaginaAtual + ((listaPaginada.pagina - 1) * listaPaginada.tamanhoPagina)} + ' de ' + ${listaPaginada.totalRegistros} + ' registros'">
+       		</div>
+       	</div>
+       	<div class="col-sm-12 col-md-7">
+   			<ul class="pagination">
+      			<li class="page-item">
+		      		<a th:href="@{{url}?pagina=1(url=${url})}"
+		      			class="page-link"
+		      			th:classappend="${listaPaginada.pagina == 1} ? 'disabled'">
+	      				Primeiro
+      				</a>
+			    </li>
+			    <li class="page-item font-weight-bold" th:classappend="${listaPaginada.pagina == 1} ? 'disabled'">
+			      	<a th:href="@{{url}?pagina={pagina}(url=${url}, pagina=${listaPaginada.pagina - 1})}"
+			      		class="page-link">Anterior</a>
+			    </li>
+			    <li class="page-item disabled" th:if="${listaPaginada.pagina - 2 > 1}">
+			      	<a class="page-link" href="#">...</a>
+			    </li>
+				<li class="page-item"
+					th:each="pagina : ${#numbers.sequence(listaPaginada.pagina > 2 ? listaPaginada.pagina - 2 : 1, listaPaginada.pagina + 2 < listaPaginada.totalPaginas ? listaPaginada.pagina + 2 : listaPaginada.totalPaginas)}"
+					th:classappend="${pagina == listaPaginada.pagina} ? 'active'">
+			      	
+			    	<a th:href="@{{url}?pagina={pagina}(url=${url},pagina=${pagina})}"
+			    		class="page-link" th:text="${pagina}"></a>
+			    </li>
+				<li class="page-item disabled" th:if="${listaPaginada.pagina + 2 < listaPaginada.totalPaginas}">
+			      	<a class="page-link" href="#">...</a>
+			    </li>
+			    <li class="page-item font-weight-bold" th:classappend="${listaPaginada.pagina == listaPaginada.totalPaginas} ? 'disabled'">
+			      	<a th:href="@{{url}?pagina={pagina}(url=${url},pagina=${listaPaginada.pagina + 1})}"
+			      		class="page-link">Próximo</a>
+			    </li>
+			    <li class="page-item">
+		      		<a th:href="@{{url}?pagina={pagina}(url=${url},pagina=${listaPaginada.totalPaginas})}" class="page-link" th:classappend="${listaPaginada.pagina == listaPaginada.totalPaginas} ? 'disabled'">Último</a>
+			    </li>
+		    </ul>
+	    </div>
+    </div>
+
+</body>
+</html>
