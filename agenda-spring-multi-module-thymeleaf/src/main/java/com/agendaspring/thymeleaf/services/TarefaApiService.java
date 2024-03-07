@@ -11,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.agendaspring.thymeleaf.configs.ApiRestTemplate;
 import com.agendaspring.thymeleaf.dtos.AlteracaoPrazoTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.CadastroTarefaDTO;
 import com.agendaspring.thymeleaf.dtos.DataTableDTO;
@@ -26,10 +27,12 @@ public class TarefaApiService implements ITarefaApiService {
     private RestTemplate restTemplate;
 
     public TarefaApiService(
-        @Value("${api.url}") String apiUrl) {
+        @Value("${api.url}") String apiUrl,
+        ApiRestTemplate apiRestTemplate)
+        throws Exception {
 
         this.apiUrl = apiUrl;
-        this.restTemplate = new RestTemplate();
+        this.restTemplate = apiRestTemplate;
     }
 
     @Override
